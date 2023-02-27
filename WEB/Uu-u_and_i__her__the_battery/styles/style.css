@@ -1,0 +1,49 @@
+* {
+  padding: 0;
+  margin: 0;
+  display: border-box;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  height: 100vh;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+}
+
+.pimpa {
+  border: 6px solid #000;
+  border-right: 0;
+  border-radius: 25px;
+  min-height: 9px;
+  height: 70%;
+}
+
+.shell {
+  border: 3px solid #000;
+  border-radius: 10px;
+  min-width: 100px;
+  min-height: 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.item1 {
+  background-color: green;
+}
+.item2 {
+  background: linear-gradient(90deg, #fff 45%, yellow 50%);
+}
+.item3 {
+  background: linear-gradient(90deg, #fff 80%, red 85%);
+}

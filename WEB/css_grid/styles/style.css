@@ -1,0 +1,23 @@
+.grid_container {
+  display: grid;
+  height: 100vh;
+  border: 1px solid;
+  /* justify-content: end; */
+  align-content: space-evenly;
+}
+
+.grid_item1 {
+  background-color: #36cc9f;
+  width: 100px;
+  height: 100px;
+}
+.grid_item2 {
+  background-color: #913e8a;
+  width: 100px;
+  height: 100px;
+}
+.grid_item3 {
+  background-color: #3936cc;
+  width: 100px;
+  height: 100px;
+}

@@ -1,3 +1,5 @@
+setwd('C:/Users/Tsinana/GitHub/6-th_semester/big_data/lab2')
+
 #Выгрузка данных
 df<-read.csv("csv_for_lab2.csv", sep=";", header=T, fileEncoding="cp1251")
 View(df)

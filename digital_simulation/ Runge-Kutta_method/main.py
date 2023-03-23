@@ -19,8 +19,8 @@ class Runge_Kutta:
     self.yk = y0
     self.zk = z0
     self.xk = x0
-    for i in range(0, 5):
-      # while self.xk <= 1:
+    # for i in range(0, 5):
+    while self.xk <= 1:
       self.generation_kplus1()
 
   def generation_kplus1(self):  # да да - целый блок только для примера
@@ -57,12 +57,26 @@ class Runge_Kutta:
     plt.plot(self.list_xk, self.list_truez, 'lime', label=r'Точное решение для x(t)')
     plt.plot(self.list_xk, self.list_yk, 'r-.', label=r'Метод Рунге-Кутта для для y(t)')
     plt.plot(self.list_xk, self.list_zk, 'b-.', label=r'Метод Рунге-Кутта для для x(t)')
-    plt.xlabel(r'$x$', fontsize=14)
-    plt.ylabel(r'$f(x)$', fontsize=14)
+    plt.xlabel(r'$t$', fontsize=14)
+    plt.ylabel(r'$f(t)$', fontsize=14)
     plt.grid(True)
     plt.legend(loc='best', fontsize=10)
     plt.savefig('figure_with_legend.png')
     plt.show()
+
+  def plot_yx(self):
+    plt.title('Лабораторная работа №3', fontsize=20, fontname='Times New Roman')
+    plt.plot(self.list_zk, self.list_yk, 'y', label=r'Метод Рунге-Кутта')
+    plt.plot(self.list_zk, self.list_yk, 'b*', label=r'Метод Рунге-Кутта')
+    plt.plot(self.list_truez, self.list_truey, 'g',label=r'Точное решение')
+    plt.plot(self.list_truez, self.list_truey, 'r*', label=r'Точное решение')
+    plt.xlabel(r'$x$', fontsize=14)
+    plt.ylabel(r'$y$', fontsize=14)
+    plt.grid(True)
+    plt.legend(loc='best', fontsize=10)
+    plt.savefig('figure_with_legend_plot_yx.png')
+    plt.show()
+
 
   def table_draw(self):
     mytable = PrettyTable()
@@ -91,8 +105,9 @@ if __name__ == '__main__':
 
       task_1 = Runge_Kutta(g, f, taskH, 0, 0, 3)
       task_1.set_true(ft, gt)
-      task_1.table_draw()
+      # task_1.table_draw()
       task_1.plot()
+      task_1.plot_yx()
     elif taskChoice == 2:
       f = lambda x, y, z: y
       g = lambda x, y, z: 2 * y
@@ -101,7 +116,8 @@ if __name__ == '__main__':
 
       task_1 = Runge_Kutta(g, f, taskH, 0, 2, 2)
       task_1.set_true(ft, gt)
-      task_1.table_draw()
+      # task_1.table_draw()
+      task_1.plot_yx()
       task_1.plot()
     else:
       f = lambda x, y, z: z

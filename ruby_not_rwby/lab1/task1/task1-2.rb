@@ -1,2 +1,0 @@
-s =`dir`
-puts s

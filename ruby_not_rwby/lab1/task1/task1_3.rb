@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 puts 'Введите команду Ruby:'
 command_ruby = STDIN.gets.chomp
 eval command_ruby

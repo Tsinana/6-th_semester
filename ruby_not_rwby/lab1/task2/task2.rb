@@ -6,10 +6,12 @@ def is_simple_digit(digit)
   true
 end
 
-# Метод нахождения максимального простого делителя числа
-def max_div_with_condition(digit,condition)
-  digit.step(1,-1) {|i| return i if digit % i == 0 and condition(i)}
+
+# Метод нахождения максимального делителя числа с условием
+def max_div_with_condition(digit,condition = lambda { |i| true })
+  digit.step(1,-1) {|i| return i if digit % i == 0 and condition.call(i)}
 end
+
 
 
 # Метод нахождения максимального простого делителя числа
@@ -17,12 +19,6 @@ def max_simple_div(digit)
   digit.step(1,-1) {|i| return i if digit % i == 0 and is_simple_digit(i)}
 end
 
-
-# Метод нахождения произведение цифр числа, не делящихся на 5. 
-def mult_numbers_not_div_5(digit)
-  function = lambda { |num| num % 5 != 0 }
-  mult_numbers_with_condition(digit,function)
-end
 
 # Метод нахождения произведение цифр числа c заданным условием
 def mult_numbers_with_condition(digit,condition = lambda { |num| true })
@@ -32,7 +28,29 @@ def mult_numbers_with_condition(digit,condition = lambda { |num| true })
 end
 
 
-puts "#{mult_numbers_div_5(1256)}"
+# Метод нахождения произведение цифр числа, не делящихся на 5. 
+def mult_numbers_not_div_5(digit)
+  function = lambda { |num| num % 5 != 0 }
+  mult_numbers_with_condition(digit,function)
+end
+
+
+#Метод вычисления НОД двух чисел
+def euclidean_algorithm(digit_a,digit_b)
+  return digit_b if digit_a % digit_b == 0
+  return euclidean_algorithm(digit_b,digit_a % digit_b)
+end
+
+# Метод нахождения НОД максимального нечетного непростого делителя 
+# числа и произведения цифр данного числа
+def extraordinary_euclidean_algorithm(digit)
+  odd_prime_divisor = lambda {|num| is_simple_digit(num) and num % 2 != 0}
+  digit_a = max_div_with_condition(digit,odd_prime_divisor)
+  digit_b = mult_numbers_with_condition(digit)
+  return 0 if digit_a == 0 or digit_b ==0
+  euclidean_algorithm(digit_a,digit_b)
+end
+
 
 # Оставил свой самый интересный метод
 # def mult_numbers_div_5(digit)

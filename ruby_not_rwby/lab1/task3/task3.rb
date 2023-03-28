@@ -1,5 +1,7 @@
 def array_min(arr)
-  arr.reduce(arr[0]){|min,num|  min>num ? num : min  }
+	min = arr[0]
+  arr.each{|num|  min = num if  min> num}
+  min
 end
 
 
@@ -16,4 +18,8 @@ def method_selection_and_data_loading(method,data)
 end	
 
 
-puts "#{method_selection_and_data_loading(ARGV[0],ARGV[1])}"
+puts "#{method_selection_and_data_loading(ARGV[0].to_i,ARGV[1])}"
+
+# def array_min(arr)
+#   arr.reduce(arr[0]){|min,num|  min>num ? num : min  }
+# end

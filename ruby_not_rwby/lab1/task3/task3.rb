@@ -8,12 +8,12 @@ def array_first_pol(arr)
 end
 
 
-def task2(method,file)
-  return 0 if !File.exists?(file) and method != 1 and method != 2
-  file_data = File.read(file).split.map(&:to_i)
+def method_selection_and_data_loading(method,data)
+  return 0 if !File.exists?(data) and method != 1 and method != 2
+  file_data = File.read(data).split.map(&:to_i)
   return array_min(file_data)	if method == 1
   return array_first_pol(file_data)	if method == 2
 end	
 
 
-puts "#{task2(2,'data.txt')}"
+puts "#{method_selection_and_data_loading(ARGV[0],ARGV[1])}"

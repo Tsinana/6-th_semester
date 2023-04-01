@@ -1,0 +1,40 @@
+.flex_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  height: 100vh;
+}
+
+.cercle_container {
+  position: relative;
+}
+
+.cercle {
+  border: 1px solid #505050;
+  border-radius: 50%;
+
+  height: 50px;
+  width: 50px;
+}
+
+.cercle_red {
+  background-color: red;
+  position: absolute;
+  bottom: -25px;
+  left: 15px;
+}
+
+.cercle_white {
+  background-color: #fff;
+  position: absolute;
+  bottom: 0px;
+}
+
+.cercle_black {
+  background-color: #000;
+  position: absolute;
+  bottom: 25px;
+  left: -15px;
+}

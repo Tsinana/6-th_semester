@@ -1,50 +1,5 @@
-def get_table_of_service_words():
-  dict = {}
-  dict["if"] = 1
-  dict["print"] = 2
-  dict["else"] = 3
-  dict["c"] = 4
-  dict["ifelse"] = 5
-  dict["for"] = 6
-  dict["in"] = 7
-  dict["while"] = 8
-  dict["repeat"] = 9
-  dict["sum"] = 10
-  dict["len", "length"] = 11
-  dict["min"] = 12
-  dict["max"] = 13
-  dict["prod"] = 14
-  dict["sort"] = 15
-  dict["scan"] = 16
-
-
-def get_table_of_operations():
-  dict = {'1':'==','2':'<-','3':'!=',}
-  dict["="] = 1
-  dict["<-"] = 2
-  dict["-"] = 3
-  dict["+"] = 4
-  dict["*"] = 5
-  dict["/"] = 6
-  dict["<"] = 7
-  dict[">"] = 8
-  dict["=="] = 9
-  dict["!="] = 10
-  dict["<="] = 11
-  dict[">="] = 12
-  dict["{"] = 13
-  dict["}"] = 14
-  return dict
-
-
-def get_table_of_separators():
-  dict = []
-  dict[","] = 1
-  dict["("] = 2
-  dict[")"] = 3
-  dict[" "] = 4
-  dict["\\n"] = 5
-
+from components.store_dictrs import store_dicts
+import re
 
 def replace_data(txt,dict,nameDict):
   for k,v in dict.items():
@@ -52,7 +7,146 @@ def replace_data(txt,dict,nameDict):
   return txt
 
 
-if __name__ == '__main__':
-  print(replace_data('= + = - =',{'1':'=','2':'-'},'A'))
+def preparation_text(txt):
+  return txt.replace(' ','')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+def push_code(case,string,dicts,code_dict):
+  if dicts[code_dict].get(string) != None:
+    case+=code_dict + str(dicts[code_dict][string]) + ' '
+  else:
+    if 'W' == code_dict:
+      code_dict = 'I'
+      if dicts[code_dict].get(string) != None:
+        case += code_dict + str(dicts[code_dict][string]) + ' '
+        return case
+    elif 'R' == code_dict:
+      code_dict = 'N'
+      if dicts[code_dict].get(string) != None:
+        case += code_dict + str(dicts[code_dict][string]) + ' '
+        return case
+    dicts[code_dict][string] = len(dicts[code_dict])
+    case +=code_dict + str(dicts[code_dict][string]) + ' '
+  return case
+
+
+
+
+def treat_text(txt,dicts):
+  txt = preparation_text(txt)
+  case = ''
+  string_keeper = ''
+  # 0 = б
+  # 1 = бц
+  # 2 = ц1
+  # 3 = ц2
+  # 4 = delete
+  # 5 = nil
+  # 6 = .ц
+  # 7 = C
+  state_keeper = 5
+  i =0
+  while i  < len(txt):
+    char = txt[i]
+    if  state_keeper == 0:
+      if 'a' <= char <= 'z':
+        string_keeper += char
+      elif '0' <= char <= '9':
+        state_keeper = 1
+        string_keeper += char
+      else:
+        case = push_code(case,string_keeper,dicts,'W')
+        string_keeper = ''
+        state_keeper = 5
+        i-=1
+
+    elif state_keeper == 1:
+      if 'a' <= char <= 'z' or '0' <= char <= '9':
+        string_keeper += char
+      else:
+        case = push_code(case, string_keeper, dicts, 'I')
+        string_keeper = ''
+        state_keeper = 5
+        i -= 1
+
+    elif state_keeper == 2:
+      if '0' <= char <= '9':
+        string_keeper += char
+      elif char == '.':
+        state_keeper = 3
+        string_keeper += char
+      else:
+        case = push_code(case, string_keeper, dicts, 'R')
+        string_keeper = ''
+        state_keeper = 5
+        i -= 1
+
+    elif state_keeper == 3:
+      if '0' <= char <= '9':
+        string_keeper += char
+      else:
+        case = push_code(case, string_keeper, dicts, 'R')
+        string_keeper = ''
+        state_keeper = 5
+        i -= 1
+
+    elif state_keeper == 4:
+      if char == '\n':
+        string_keeper = ''
+        state_keeper = 5
+
+    elif state_keeper == 6:
+      if '0' <= char <= '9':
+        state_keeper = 3
+        string_keeper += char
+      else:
+        case = push_code(case, string_keeper, dicts, 'R')
+        string_keeper = ''
+        state_keeper = 5
+        i -= 1
+
+    elif state_keeper == 7:
+      if char == '\'' or  char == '\"':
+        case = push_code(case, string_keeper, dicts, 'C')
+        string_keeper = ''
+        state_keeper = 5
+      else:
+        string_keeper += char
+
+    else:
+        if 'a' <= char <= 'z':
+          state_keeper = 0
+          string_keeper += char
+
+        elif '0' <= char <= '9':
+          state_keeper = 2
+          string_keeper += char
+
+        elif char == '.':
+          state_keeper = 6
+          string_keeper += char
+
+        elif char == '#':
+          state_keeper = 4
+          string_keeper += char
+
+        elif char == '\'' or char == '\"':
+          state_keeper = 7
+
+        else:
+          if dicts['O'].get(char) != None:
+            case = push_code(case, char, dicts, 'O')
+          elif dicts['R'].get(char) != None:
+            case = push_code(case, char, dicts, 'R')
+    i+=1
+  return case
+
+
+if __name__ == '__main__':
+  SD = store_dicts()
+  dicts = SD.get_all_compiled_dictionaries()
+  with open("program_r.r", "r") as f:
+    data = f.read()
+
+  with open("prog_in_code.txt", "w") as f:
+    print(treat_text(data,dicts), file=f)

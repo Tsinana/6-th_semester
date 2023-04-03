@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lab1</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="man icon" type="image/x-icon" href="/images/icon.ico" />
+  </head>
+  <body>
+    <div class="layout_container">
+      <header>
+        <div class="logo flex-container">
+          <img src="/images/logo.png" alt="logo" />
+        </div>
+      </header>
+
+      <main class="flex-container">
+        <h1 class="main_h1">Задания по JS -- вариант 15</h1>
+
+        <section class="flex-container">
+          <div id="dateTimeBtn" type="button" class="btn btn-one">
+            <span>Задание 1 - Дата\время</span>
+          </div>
+        </section>
+
+        <section class="flex-container">
+          <div id="calenderBtn" type="button" class="btn btn-one">
+            <span>Задание 1 - Дата\время</span>
+          </div>
+        </section>
+      </main>
+
+      <footer></footer>
+    </div>
+
+    <script type="module" src="./main.js">
+      dateTimeBtn.onckick = GET_DATA_TIME("dateTimeBtn");
+    </script>
+  </body>
+</html>

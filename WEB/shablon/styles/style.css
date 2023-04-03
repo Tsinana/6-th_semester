@@ -1,0 +1,63 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  height: 100vh;
+  background-color: antiquewhite;
+}
+
+header,
+footer {
+  background-color: teal;
+  height: 50px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+section {
+  margin: 20px 0;
+}
+
+.section1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: azure;
+}
+
+.section2 {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(158, 171, 171);
+}
+
+.section2_card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.a {
+  background-color: red;
+  height: 100px;
+  width: 100px;
+}
+
+.b {
+  background-color: blue;
+  height: 100px;
+  width: 100px;
+}
+
+.c {
+  background-color: chartreuse;
+  height: 100px;
+  width: 100px;
+}

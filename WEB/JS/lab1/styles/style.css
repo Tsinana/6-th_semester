@@ -1,0 +1,14 @@
+@import url("layout.css");
+@import url("/components/calender/calender.css");
+@import url("/components/dateTime/dateTime.css");
+
+* {
+  padding: 0%;
+  margin: 0%;
+}
+
+/* #4e4429 темный
+#0d5a64
+#808589
+#e09e2d
+#dbe4eb светлый */

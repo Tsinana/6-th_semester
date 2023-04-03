@@ -13,6 +13,7 @@ header {
 main {
   justify-content: start;
   grid-area: main;
+  min-height: 100vh;
 }
 
 footer {
@@ -37,8 +38,6 @@ section {
     "header"
     "main"
     "footer";
-
-  height: 100vh;
 }
 
 .flex-container {

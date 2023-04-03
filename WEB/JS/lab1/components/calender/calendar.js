@@ -40,7 +40,11 @@ export function createCalendar(element_id) {
       );
   }
 
-  calender.querySelector();
+  let l = calender.querySelectorAll("div");
+  l[curDate + 5 + day_name].classList.add("currentDate");
+  for (let index = 0; index < l.length; index++) {
+    if (index % 7 == 5 || index % 7 == 6) l[index].classList.add("weekend");
+  }
 
   shell.insertAdjacentElement("afterBegin", calender);
   shell.insertAdjacentElement("afterBegin", monthName);

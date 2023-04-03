@@ -24,6 +24,26 @@
   width: 100%;
 }
 
+.weekend {
+  color: #e09e2d;
+}
+
 .notDayInMonth {
-  color: #dbe4eb5b;
+  color: hsla(206, 29%, 89%, 0.357);
+}
+.weekend.notDayInMonth {
+  color: hsl(38, 74%, 53%, 0.357);
+}
+
+.currentDate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e09e2d;
+
+  color: #dbe4eb;
+  border: thick double#dbe4eb;
+
+  min-width: 80%;
+  min-height: 80%;
 }

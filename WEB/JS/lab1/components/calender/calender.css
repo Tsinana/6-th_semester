@@ -20,6 +20,10 @@
 
 .monthName {
   text-align: center;
-  background: linear-gradient(90grad, #e09e2d, 5%, #808589, 95%, #e09e2d);
+  background: linear-gradient(90grad, #e09e2d 5%, #808589 40% 60%, #e09e2d 95%);
   width: 100%;
+}
+
+.notDayInMonth {
+  color: #dbe4eb5b;
 }

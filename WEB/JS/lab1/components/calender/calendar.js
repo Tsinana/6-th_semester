@@ -16,24 +16,60 @@ export function createCalendar(element_id) {
   let date_now = new Date();
   const mm = getNameMonth(date_now.getMonth());
   const curDate = date_now.getDate();
-  date_now.setDate(1);
-  const day_name = date_now.getDay();
 
   monthName.innerHTML = `${mm}`;
 
-  for (
-    let i = 1;
-    i <= 42;
-    i++ // Цикл для заполнения таблицы.
-  ) {
-    calender.insertAdjacentHTML("beforeend", "<div>" + i + "</div>");
-    // Выводим ячейку календаря.
+  const countDaysLastMonth = getCountDaysLastMonth(date_now);
+  const countDaysCurMonth = getCountDaysCurMonth(date_now);
+  const day_name = getDayName(date_now);
+
+  if (day_name == 0) day_name = 7;
+
+  for (let i = 2 - day_name; i <= 43 - day_name; i++) {
+    if (i > 0 && i <= countDaysCurMonth)
+      calender.insertAdjacentHTML("beforeend", "<div >" + i + "</div>");
+    else if (i <= 0)
+      calender.insertAdjacentHTML(
+        "beforeend",
+        '<div class="notDayInMonth">' + (countDaysLastMonth + i) + "</div>"
+      );
+    else
+      calender.insertAdjacentHTML(
+        "beforeend",
+        '<div class="notDayInMonth">' + (i - countDaysCurMonth) + "</div>"
+      );
   }
+
+  calender.querySelector();
 
   shell.insertAdjacentElement("afterBegin", calender);
   shell.insertAdjacentElement("afterBegin", monthName);
   elem.after(shell);
-  // Закрываем теги элементов ‹table›.
+}
+
+function getDayName(date) {
+  const keepDate = date.getDate();
+  date.setDate(1);
+  const ans = date.getDay();
+  date.setDate(keepDate);
+  return ans;
+}
+
+function getCountDaysLastMonth(date) {
+  const keepDate = date.getDate();
+  date.setDate(0);
+  const ans = date.getDate();
+  date.setDate(keepDate + date.getDate());
+  return ans;
+}
+
+function getCountDaysCurMonth(date) {
+  const keepDate = date.getDate();
+  date.setMonth(date.getMonth() + 1);
+  date.setDate(0);
+  const ans = date.getDate();
+  date.setDate(keepDate);
+  return ans;
 }
 
 function getDate() {

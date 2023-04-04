@@ -17,8 +17,12 @@ export function createCalendar(element_id) {
   const mm = getNameMonth(date_now.getMonth());
   const curDate = date_now.getDate();
 
-  monthName.innerHTML = `${mm}`;
-
+  monthName.insertAdjacentHTML(
+    "afterBegin",
+    "<div> <div value='<-' id='calendarBtnL'>s</dib>" +
+      mm +
+      "<div value='->' id='calendarBtnR'></dib></div>"
+  );
   const countDaysLastMonth = getCountDaysLastMonth(date_now);
   const countDaysCurMonth = getCountDaysCurMonth(date_now);
   const day_name = getDayName(date_now);

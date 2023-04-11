@@ -19,9 +19,7 @@ export function createCalendar(element_id) {
 
   monthName.insertAdjacentHTML(
     "afterBegin",
-    "<div> <div value='<-' id='calendarBtnL'>s</dib>" +
-      mm +
-      "<div value='->' id='calendarBtnR'></dib></div>"
+    `<button id='calendarBtnL'><-</button><p>${mm}</p><button id='calendarBtnR'>-></button>`
   );
   const countDaysLastMonth = getCountDaysLastMonth(date_now);
   const countDaysCurMonth = getCountDaysCurMonth(date_now);

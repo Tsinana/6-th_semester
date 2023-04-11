@@ -19,9 +19,18 @@
 }
 
 .monthName {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* text-align: center; */
   background: linear-gradient(90grad, #e09e2d 5%, #808589 40% 60%, #e09e2d 95%);
   width: 100%;
+}
+
+.monthName > button {
+  background-color: #e09e2d;
+  height: 40px;
+  width: 40px;
 }
 
 .weekend {

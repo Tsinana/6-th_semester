@@ -12,9 +12,6 @@
       crossorigin="anonymous"
     />
     <script src="https://cdn.jsdelivr.net/npm/slapform@latest/dist/index.min.js"></script>
-    <script type="text/javascript">
-      var slapform = new Slapform(); // The script above exposes the global variable 'Slapform'
-    </script>
   </head>
   <body>
     <div>
@@ -44,16 +41,17 @@
       <div class="container">
         <div class="p-5 my-4 bg-light rounded-3">
           <h1>Big Form</h1>
-          <!-- <p class="lead"></p> -->
-          <form>
+          <!-- form -->
+          <form action="" method="POST"  id="mainForm">
             <div class="mb-3 form-group">
               <label for="exampleInputText1">Single-line text field</label>
               <input
-                type="email"
+                type="text"
                 class="form-control"
                 id="exampleInputText1"
                 placeholder="Enter text"
                 value="Start value"
+                name="lineTextField"
               />
             </div>
 
@@ -65,12 +63,13 @@
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 placeholder="Enter email"
+                name="email"
               />
             </div>
 
             <div class="mb-3 form-group">
               <label for="inputDate">Date field</label>
-              <input type="date" class="form-control" />
+              <input type="date" class="form-control" name="date" />
             </div>
 
             <div class="mb-3 form-group">
@@ -79,12 +78,17 @@
                 class="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
+                name="textArea"
               ></textarea>
             </div>
 
             <div class="mb-3 form-group">
               <label for="exampleFormControlSelect1">Select</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <select
+                name="select"
+                class="form-control"
+                id="exampleFormControlSelect1"
+              >
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -96,6 +100,7 @@
             <div class="mb-3 form-group">
               <label for="exampleFormControlSelect2">Multiple select</label>
               <select
+                name="multySelect"
                 multiple
                 class="form-control"
                 id="exampleFormControlSelect2"
@@ -114,7 +119,7 @@
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="exampleRadios"
+                  name="radio1"
                   id="exampleRadios1"
                   value="option1"
                   checked
@@ -128,7 +133,7 @@
                 <input
                   class="form-check-input"
                   type="radio"
-                  name="exampleRadios"
+                  name="radio2"
                   id="exampleRadios2"
                   value="option2"
                 />
@@ -145,21 +150,25 @@
                 type="checkbox"
                 value=""
                 id="defaultCheck1"
+                name="cb"
               />
               <label class="form-check-label" for="defaultCheck1">
                 Default checkbox
               </label>
             </div>
+            <button class="mb-3 btn btn-success btn-lg" type="submit">
+              Submit
+            </button>
           </form>
-
-          <p class="mb-3">
+          <!-- form -->
+          <!-- <p class="mb-3">
             <a
               href="https://www.tutorialrepublic.com"
               target="_blank"
               class="btn btn-success btn-lg"
               >Start</a
             >
-          </p>
+          </p> -->
         </div>
         <div class="row">
           <div class="col-md-4">
@@ -229,6 +238,7 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
-    <script type="module" src="./main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slapform@latest/dist/index.min.js"></script>
+    <script src="/main.js"></script>
   </body>
 </html>

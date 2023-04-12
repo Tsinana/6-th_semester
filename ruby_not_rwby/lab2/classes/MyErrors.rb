@@ -1,0 +1,2 @@
+class UncorrectPhoneError < StandardError
+end

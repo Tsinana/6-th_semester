@@ -2,7 +2,9 @@ require './classes/my_errors'
 require './modules/attr_validated'
 
 class Student
+	require 'json'
 	include AttrValidated 
+
 
 	ID_regex = /^[0-9]+$/
 	Phone_number_regex = /^[(\+7)8][0-9]+$/
@@ -11,12 +13,14 @@ class Student
 	Git_regex = /^[\w0-9]+$/
 	Email_regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-	attr_validated (:id) {|val| val =~ ID_regex || val.nil?}
+
+	attr_validated :id do |val| val =~ ID_regex || val.nil? end
 	attr_validated :surname, :name, :patronymic  do |val| val =~ Full_name_regex || val.nil? end
-	attr_validated (:telegram) {|val| val =~ Telegram_regex || val.nil?} 
-	attr_validated (:email) {|val| val =~ Email_regex || val.nil?} 
-	attr_validated (:git) {|val| val =~ Git_regex || val.nil?} 
-	attr_validated (:phone_number) {|val| val =~ Phone_number_regex || val.nil?} 
+	attr_validated :telegram do |val| val =~ Telegram_regex || val.nil? end
+	attr_validated :email do |val| val =~ Email_regex || val.nil? end
+	attr_validated :git do |val| val =~ Git_regex || val.nil? end
+	attr_validated :phone_number do |val| val =~ Phone_number_regex || val.nil? end
+
 
 	def initialize(id: , surname: , name: , patronymic: ,phone_number: nil, telegram: nil, email: nil, git: nil)
 		self.id = id 
@@ -30,35 +34,68 @@ class Student
 	end
 
 
-	# метод преобразования объекта в строку с разделителем арг: -separator 
-	def to_s(separator = ';')
-		"#{self.id}#{separator}#{self.surname}#{separator}#{self.name}#{separator}#{self.patronymic}#{separator}#{self.phone_number}#{separator}#{self.telegram}#{separator}#{self.email}#{separator}#{self.git}#{separator}"
+	# метод формирует массив "поле: значение" которые разрешенны к выводу
+	def get_permit_data
+		fields = []
+    self.instance_variables.each do |var|
+      name = var.to_s.delete("@")
+      if self.respond_to?(name)
+        value = self.send(name)
+        fields << "#{name}: #{value}" # важный пробел
+      end
+    end
+    fields
+	end
+
+
+	# метод преобразования объекта в строку
+	def to_s
+		get_permit_data.join(", ")
 	end
 
 
 	# метод вывода титулов объекта в строку с разделителем арг: -separator
 	def print_title(separator = ';')
-		"id#{separator}surnamename#{separator}patronymic#{separator}phone_number#{separator}telegram#{separator}email#{separator}git#{separator}"
+		get_permit_data.map{|val| val.split(":").first}.join("#{separator}")
 	end
+
+
+	# метод преобразования данных объекта в строку с разделителем арг: -separator 
+	def print_data(separator = ";")
+		get_permit_data.map{|val| val.split(": ").last}.join("#{separator}")
+	end
+
+
+	def self.string_to_obj(str)
+	  hash = {}
+	  str.split(", ").each do |field|
+	    name, value = field.split(": ")
+	    hash[name.to_sym] = value
+	  end
+	  new(hash)
+	end
+
 
 	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи
 	def validate
-	  validate_git
-	  validate_contact_info
+		validate_git
+		validate_contact_info
 	end
 
 	def validate_git
-	  raise "Git не установлен" if :git.nil?
+		raise "Git не установлен" if :git == nil
 	end
 
 	def validate_contact_info
-	  contact_info = [:phone_number, :email, :telegram]
-	  raise "Нет контактной информации" unless contact_info.any? { |info| !send(info).nil? }
+		contact_info = [:phone_number, :email, :telegram]
+		raise "Нет контактной информации" unless contact_info.any? { |info| !send(info).nil? }
 	end
 
+
+	# метод, который устанавливает значения поля или полей для введенных контактов.
 	def set_contacts(email: self.email, phone_number: self.phone_number, telegram: self.telegram)
-    self.email = email
-    self.phone_number = phone_number
-    self.telegram = telegram
-  end
+		self.email = email
+		self.phone_number = phone_number
+		self.telegram = telegram
+	end
 end

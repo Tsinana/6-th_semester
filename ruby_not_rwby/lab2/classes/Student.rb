@@ -1,5 +1,5 @@
-require './classes/MyErrors'
-require './modules/AttrValidated'
+require './classes/my_errors'
+require './modules/attr_validated'
 
 class Student
 	include AttrValidated 
@@ -30,14 +30,35 @@ class Student
 	end
 
 
-	# функция преобразования объекта в строку с разделителем арг: -separator 
+	# метод преобразования объекта в строку с разделителем арг: -separator 
 	def to_s(separator = ';')
-		"#{@id}#{separator}#{@surname}#{separator}#{@name}#{separator}#{@patronymic}#{separator}#{@phone_number}#{separator}#{@telegram}#{separator}#{@email}#{separator}#{@git}#{separator}"
+		"#{self.id}#{separator}#{self.surname}#{separator}#{self.name}#{separator}#{self.patronymic}#{separator}#{self.phone_number}#{separator}#{self.telegram}#{separator}#{self.email}#{separator}#{self.git}#{separator}"
 	end
 
 
-	# функция вывода титулов объекта в строку с разделителем арг: -separator
+	# метод вывода титулов объекта в строку с разделителем арг: -separator
 	def print_title(separator = ';')
 		"id#{separator}surnamename#{separator}patronymic#{separator}phone_number#{separator}telegram#{separator}email#{separator}git#{separator}"
 	end
+
+	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи
+	def validate
+	  validate_git
+	  validate_contact_info
+	end
+
+	def validate_git
+	  raise "Git не установлен" if :git.nil?
+	end
+
+	def validate_contact_info
+	  contact_info = [:phone_number, :email, :telegram]
+	  raise "Нет контактной информации" unless contact_info.any? { |info| !send(info).nil? }
+	end
+
+	def set_contacts(email: self.email, phone_number: self.phone_number, telegram: self.telegram)
+    self.email = email
+    self.phone_number = phone_number
+    self.telegram = telegram
+  end
 end

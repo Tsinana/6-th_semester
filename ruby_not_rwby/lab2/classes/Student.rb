@@ -7,22 +7,22 @@ class Student
 
 
 	ID_regex = /^[0-9]+$/
-	Phone_number_regex = /^[(\+7)8][0-9]+$/
+	Phone_regex = /^[(\+7)8][0-9]+$/
 	Full_name_regex = /^[\w]+$/
 	Telegram_regex = /^@[\w0-9]+$/
 	Git_regex = /^[\w0-9]+$/
 	Email_regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-
+	attr_writer :vk
 	attr_validated :id do |val| val =~ ID_regex || val.nil? end
 	attr_validated :surname, :name, :patronymic  do |val| val =~ Full_name_regex || val.nil? end
 	attr_validated :telegram do |val| val =~ Telegram_regex || val.nil? end
 	attr_validated :email do |val| val =~ Email_regex || val.nil? end
 	attr_validated :git do |val| val =~ Git_regex || val.nil? end
-	attr_validated :phone_number do |val| val =~ Phone_number_regex || val.nil? end
+	attr_validated :phone do |val| val =~ Phone_regex || val.nil? end
 
 
-	def initialize(id: , surname: , name: , patronymic: ,phone_number: nil, telegram: nil, email: nil, git: nil)
+	def initialize(id: , surname: , name: , patronymic: ,phone: nil, telegram: nil, email: nil, git: nil,vk: nil)
 		self.id = id 
 		self.surname = surname
 		self.name = name 
@@ -30,7 +30,8 @@ class Student
 		self.telegram = telegram
 		self.email = email 
 		self.git = git
-		self.phone_number = phone_number
+		self.phone = phone
+		self.vk = 1
 	end
 
 
@@ -77,10 +78,22 @@ class Student
 
 
 	# метод, который устанавливает значения поля или полей для введенных контактов.
-	def set_contacts(email: self.email, phone_number: self.phone_number, telegram: self.telegram)
+	def set_contacts(email: self.email, phone: self.phone, telegram: self.telegram)
 		self.email = email
-		self.phone_number = phone_number
+		self.phoneva = phone
 		self.telegram = telegram
+	end
+
+	def get_info
+		self.validate
+		person = "#{self.surname} #{self.name[0]} #{self.patronymic[0]}"
+		person += "\t#{@vk}"
+		person += "\t#{[self.phone, self.email, self.telegram].find(&:itself)}"
+	end
+
+
+	def get_git
+		"https://github.com/#{self.git}"
 	end
 
 	private
@@ -96,7 +109,7 @@ class Student
 	end
 
 	def validate_contact_info
-		contact_info = [:phone_number, :email, :telegram]
+		contact_info = [:phone, :email, :telegram]
 		raise "Нет контактной информации" unless contact_info.any? { |info| !send(info).nil? }
 	end
 end

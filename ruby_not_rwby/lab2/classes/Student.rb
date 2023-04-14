@@ -43,7 +43,6 @@ class Student
         value = self.send(name)
         fields << "#{name}: #{value}" # важный пробел
       end
-    end
     fields
 	end
 
@@ -55,25 +54,29 @@ class Student
 
 
 	# метод вывода титулов объекта в строку с разделителем арг: -separator
-	def print_title(separator = ';')
+	def get_titles(separator = ';')
 		get_permit_data.map{|val| val.split(":").first}.join("#{separator}")
 	end
 
 
 	# метод преобразования данных объекта в строку с разделителем арг: -separator 
-	def print_data(separator = ";")
-		get_permit_data.map{|val| val.split(": ").last}.join("#{separator}")
+	def get_data(separator = ";")
+		get_permit_data.map{|val| val.split(":").last.strip}.join("#{separator}")
 	end
 
 
-	def self.string_to_obj(str)
-	  hash = {}
-	  str.split(", ").each do |field|
-	    name, value = field.split(": ")
-	    hash[name.to_sym] = value
-	  end
-	  new(hash)
-	end
+	# метод преобразования строки в объект. Строка формата to_s
+	# def self.string_to_obj(str)
+	#   hash = {}
+	#   titles = self.get_titles(';').split(';')
+	#   str.split(", ").each do |field|
+	# 		name, value = field.split(": ")
+	# 		raise ArgumentError, "Title error #{name}" unless titles.include?(name) 
+	# 		titles.delte(name)
+	# 		hash[name.to_sym] = value
+	#   end
+	#   puts (hash)
+	# end
 
 
 	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи

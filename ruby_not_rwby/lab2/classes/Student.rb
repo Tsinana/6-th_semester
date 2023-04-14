@@ -31,7 +31,7 @@ class Student
 		self.email = email 
 		self.git = git
 		self.phone = phone
-		self.vk = 1
+		self.vk
 	end
 
 
@@ -84,20 +84,31 @@ class Student
 		self.telegram = telegram
 	end
 
+
+# метод, который возвращает краткую информацию о студенте – Фамилия и Инициалы; гит, связь в ОДНОЙ строке
 	def get_info
 		self.validate
-		person = "#{self.surname} #{self.name[0]} #{self.patronymic[0]}"
-		person += "\t#{@vk}"
-		person += "\t#{[self.phone, self.email, self.telegram].find(&:itself)}"
+		person = "#{self.get_fullname}"
+		person += "\t#{self.get_git}"
+		person += "\t#{[self.et_contact}"
 	end
 
+	def get_contact
+		"#{[self.phone, self.email, self.telegram].find(&:itself)}"
+	end
+
+	def get_fullname
+		"#{self.surname} #{self.name[0]} #{self.patronymic[0]}"
+	end
 
 	def get_git
 		"https://github.com/#{self.git}"
 	end
 
+
 	private
 	
+
 	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи
 	def validate
 		validate_git

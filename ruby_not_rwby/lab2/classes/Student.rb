@@ -70,13 +70,21 @@ class Student
 	  hash = {}
 	  str.split(", ").each do |field|
 			name, value = field.split(": ")
-			hash[name.to_sym] = value.to_s
+			hash[name.to_sym] = value
 	  end
-	  puts  hash
 	  self.new(**hash)
 	end
 
 
+	# метод, который устанавливает значения поля или полей для введенных контактов.
+	def set_contacts(email: self.email, phone_number: self.phone_number, telegram: self.telegram)
+		self.email = email
+		self.phone_number = phone_number
+		self.telegram = telegram
+	end
+
+	private
+	
 	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи
 	def validate
 		validate_git
@@ -90,13 +98,5 @@ class Student
 	def validate_contact_info
 		contact_info = [:phone_number, :email, :telegram]
 		raise "Нет контактной информации" unless contact_info.any? { |info| !send(info).nil? }
-	end
-
-
-	# метод, который устанавливает значения поля или полей для введенных контактов.
-	def set_contacts(email: self.email, phone_number: self.phone_number, telegram: self.telegram)
-		self.email = email
-		self.phone_number = phone_number
-		self.telegram = telegram
 	end
 end

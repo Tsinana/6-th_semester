@@ -2,7 +2,6 @@ require './classes/my_errors'
 require './modules/attr_validated'
 
 class Student
-	require 'json'
 	include AttrValidated 
 
 
@@ -13,7 +12,7 @@ class Student
 	Git_regex = /^[\w0-9]+$/
 	Email_regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-	attr_writer :vk
+
 	attr_validated :id do |val| val =~ ID_regex || val.nil? end
 	attr_validated :surname, :name, :patronymic  do |val| val =~ Full_name_regex || val.nil? end
 	attr_validated :telegram do |val| val =~ Telegram_regex || val.nil? end
@@ -22,7 +21,7 @@ class Student
 	attr_validated :phone do |val| val =~ Phone_regex || val.nil? end
 
 
-	def initialize(id: , surname: , name: , patronymic: ,phone: nil, telegram: nil, email: nil, git: nil,vk: nil)
+	def initialize(id: , surname: , name: , patronymic: ,phone: nil, telegram: nil, email: nil, git: nil)
 		self.id = id 
 		self.surname = surname
 		self.name = name 
@@ -31,7 +30,6 @@ class Student
 		self.email = email 
 		self.git = git
 		self.phone = phone
-		self.vk
 	end
 
 
@@ -89,8 +87,8 @@ class Student
 	def get_info
 		self.validate
 		person = "#{self.get_fullname}"
-		person += "\t#{self.get_git}"
-		person += "\t#{[self.et_contact}"
+		person += "\t#{self.get_full_git}"
+		person += "\t#{self.get_contact}"
 	end
 
 	def get_contact
@@ -101,7 +99,7 @@ class Student
 		"#{self.surname} #{self.name[0]} #{self.patronymic[0]}"
 	end
 
-	def get_git
+	def get_full_git
 		"https://github.com/#{self.git}"
 	end
 

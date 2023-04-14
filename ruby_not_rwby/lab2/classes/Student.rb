@@ -43,9 +43,9 @@ class Student
         value = self.send(name)
         fields << "#{name}: #{value}" # важный пробел
       end
-    fields
+  	end
+  	fields
 	end
-
 
 	# метод преобразования объекта в строку
 	def to_s
@@ -66,17 +66,15 @@ class Student
 
 
 	# метод преобразования строки в объект. Строка формата to_s
-	# def self.string_to_obj(str)
-	#   hash = {}
-	#   titles = self.get_titles(';').split(';')
-	#   str.split(", ").each do |field|
-	# 		name, value = field.split(": ")
-	# 		raise ArgumentError, "Title error #{name}" unless titles.include?(name) 
-	# 		titles.delte(name)
-	# 		hash[name.to_sym] = value
-	#   end
-	#   puts (hash)
-	# end
+	def self.string_to_obj(str)
+	  hash = {}
+	  str.split(", ").each do |field|
+			name, value = field.split(": ")
+			hash[name.to_sym] = value.to_s
+	  end
+	  puts  hash
+	  self.new(**hash)
+	end
 
 
 	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи

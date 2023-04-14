@@ -1,4 +1,3 @@
-require './classes/my_errors'
 require './modules/attr_validated'
 
 class Student
@@ -46,6 +45,7 @@ class Student
   	fields
 	end
 
+
 	# метод преобразования объекта в строку
 	def to_s
 		get_permit_data.join(", ")
@@ -66,12 +66,14 @@ class Student
 
 	# метод преобразования строки в объект. Строка формата to_s
 	def self.string_to_obj(str)
-	  hash = {}
-	  str.split(", ").each do |field|
-			name, value = field.split(": ")
-			hash[name.to_sym] = value
-	  end
-	  self.new(**hash)
+	  params = {}
+		str.split(',').each do |field|
+    	key, value = field.split(':').map(&:strip)
+	    raise "Unknown field: #{key}" unless defined?("@#{key}")
+	    value = nil if value.length == 0
+	    params[key.to_sym] = value
+ 		end
+	  self.new(**params)
 	end
 
 

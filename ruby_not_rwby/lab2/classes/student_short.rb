@@ -1,6 +1,4 @@
-class StudentShort
-
-
+class StudentShort < SuperStudent
 	attr_reader :id, :fullname, :git, :contact
 
 

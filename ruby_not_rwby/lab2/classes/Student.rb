@@ -1,23 +1,15 @@
 require './modules/attr_validated'
+require './classes/super_student'
 
-class Student
-	include AttrValidated 
-
-
-	ID_regex = /^[0-9]+$/
-	Phone_regex = /^[(\+7)8][0-9]+$/
-	Full_name_regex = /^[\w]+$/
-	Telegram_regex = /^@[\w0-9]+$/
-	Git_regex = /^[\w0-9]+$/
-	Email_regex = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+class Student < SuperStudent
 
 
-	attr_validated :id do |val| val =~ ID_regex || val.nil? end
-	attr_validated :surname, :name, :patronymic  do |val| val =~ Full_name_regex || val.nil? end
-	attr_validated :telegram do |val| val =~ Telegram_regex || val.nil? end
-	attr_validated :email do |val| val =~ Email_regex || val.nil? end
-	attr_validated :git do |val| val =~ Git_regex || val.nil? end
-	attr_validated :phone do |val| val =~ Phone_regex || val.nil? end
+	attr_validated :id do |val| val =~ ID_REGEX || val.nil? end
+	attr_validated :surname, :name, :patronymic  do |val| val =~ FULL_NAME_REGEX || val.nil? end
+	attr_validated :telegram do |val| val =~ TELEGRAM_REGEX || val.nil? end
+	attr_validated :email do |val| val =~ EMAIL_REGEX || val.nil? end
+	attr_validated :git do |val| val =~ GIT_REGEX || val.nil? end
+	attr_validated :phone do |val| val =~ PHONE_REGEX || val.nil? end
 
 
 	def initialize(id: , surname: , name: , patronymic: ,phone: nil, telegram: nil, email: nil, git: nil)
@@ -29,51 +21,6 @@ class Student
 		self.email = email 
 		self.git = git
 		self.phone = phone
-	end
-
-
-	# метод формирует массив "поле: значение" которые разрешенны к выводу
-	def get_permit_data
-		fields = []
-    self.instance_variables.each do |var|
-      name = var.to_s.delete("@")
-      if self.respond_to?(name)
-        value = self.send(name)
-        fields << "#{name}: #{value}" # важный пробел
-      end
-  	end
-  	fields
-	end
-
-
-	# метод преобразования объекта в строку
-	def to_s
-		get_permit_data.join(", ")
-	end
-
-
-	# метод вывода титулов объекта в строку с разделителем арг: -separator
-	def get_titles(separator = ';')
-		get_permit_data.map{|val| val.split(":").first}.join("#{separator}")
-	end
-
-
-	# метод преобразования данных объекта в строку с разделителем арг: -separator 
-	def get_data(separator = ";")
-		get_permit_data.map{|val| val.split(":").last.strip}.join("#{separator}")
-	end
-
-
-	# метод преобразования строки в объект. Строка формата to_s
-	def self.string_to_obj(str)
-	  params = {}
-		str.split(',').each do |field|
-    	key, value = field.split(':').map(&:strip)
-	    raise "Unknown field: #{key}" unless defined?("@#{key}")
-	    value = nil if value.length == 0
-	    params[key.to_sym] = value
- 		end
-	  self.new(**params)
 	end
 
 

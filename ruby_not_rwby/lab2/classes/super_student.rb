@@ -1,3 +1,5 @@
+require './modules/attr_validated'
+
 class SuperStudent
 	include AttrValidated 
 

@@ -1,8 +1,7 @@
-require './modules/attr_validated'
 require './classes/super_student'
 
 class Student < SuperStudent
-
+	@@students = []
 
 	attr_validated :id do |val| val =~ ID_REGEX || val.nil? end
 	attr_validated :surname, :name, :patronymic  do |val| val =~ FULL_NAME_REGEX || val.nil? end
@@ -21,6 +20,7 @@ class Student < SuperStudent
 		self.email = email 
 		self.git = git
 		self.phone = phone
+		@@students << self
 	end
 
 
@@ -51,6 +51,40 @@ class Student < SuperStudent
 	def get_full_git
 		"https://github.com/#{self.git}"
 	end
+
+
+	def self.get_students
+		@@students
+	end
+
+
+	def self.read_from_txt(path,separator = ';')
+		raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
+		File.open(path) do |file|
+			keys = file.first.chop.split(separator)
+			file.each do |line|
+				params = {}
+				values = line.split(separator)
+				values[-1] = values[-1].chop
+				(keys.length).times do |i|
+					values[i] = nil if values[i].length == 0
+					params[keys[i].to_sym] = values[i]
+				end
+				new(**params)
+			end
+		end
+	end
+
+
+def self.write_to_txt(path,separator = ';')
+	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
+	File.open(path,'w') do |file|
+		file.puts @@students[0].get_titles(separator)
+		@@students.each do |student|
+			file.puts student.get_data(separator)
+		end
+	end
+end
 
 
 	private

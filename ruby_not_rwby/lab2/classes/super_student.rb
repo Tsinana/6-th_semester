@@ -12,6 +12,9 @@ class SuperStudent
 	EMAIL_REGEX = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
 
+	@@students = []
+
+
 	# метод формирует массив "поле: значение" которые разрешенны к выводу
 	def get_permit_data
 		fields = []
@@ -54,5 +57,10 @@ class SuperStudent
 	    params[key.to_sym] = value
  		end
 	  self.new(**params)
+	end
+
+
+		def self.get_students
+		@@students
 	end
 end

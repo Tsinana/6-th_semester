@@ -1,17 +1,18 @@
 class StudentShort < SuperStudent
 	attr_reader :id, :fullname, :git, :contact
 
-
-	def initialize(id: , fullname: ,git: , contact:)
+	def initialize(id: , contact_string:)
 		@id = id
-		@fullname = fullname
-		@git = git
-		@contact = contact
+		contacts = contact_string.split("\t")
+		@fullname = contacts[0]
+		@git = contacts[1]
+		@contact = contacts[2]
+		@@students << self
 	end
 
 
 	def self.student_init(student_obj)
-		new(id: student_obj.id,fullname: student_obj.get_fullname, git: student_obj.git, contact: student_obj.get_contact)
+		new(id: student_obj.id, contact_string: student_obj.get_info)
 	end
 end
 # валидация??

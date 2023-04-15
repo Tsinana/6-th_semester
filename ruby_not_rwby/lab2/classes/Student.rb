@@ -1,8 +1,6 @@
 require './classes/super_student'
 
 class Student < SuperStudent
-	@@students = []
-
 	attr_validated :id do |val| val =~ ID_REGEX || val.nil? end
 	attr_validated :surname, :name, :patronymic  do |val| val =~ FULL_NAME_REGEX || val.nil? end
 	attr_validated :telegram do |val| val =~ TELEGRAM_REGEX || val.nil? end
@@ -53,11 +51,6 @@ class Student < SuperStudent
 	end
 
 
-	def self.get_students
-		@@students
-	end
-
-
 	def self.read_from_txt(path,separator = ';')
 		raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
 		File.open(path) do |file|
@@ -77,7 +70,6 @@ class Student < SuperStudent
 
 
 def self.write_to_txt(path,separator = ';')
-	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
 	File.open(path,'w') do |file|
 		file.puts @@students[0].get_titles(separator)
 		@@students.each do |student|

@@ -13,11 +13,12 @@ medians <- with(df.median, order(df.median$spicy_name, decreasing = F)) # Equiva
 
 df1 = df[c(-1,-2)]
 newdf = df1[order(colnames(df1),decreasing = T)]
-
-boxplot(newdf,density = 20, col = "red",las = 2)
-
+n =newdf[2,2]
+boxplot(newdf,density = 20, col = "red",
+        horiz = T,las = 2)
+hist(newdf[1])
 #Сформировать отдельные наборы данных по одинаковому признаку
 dfp = subset(df,Pudow >=6,select=c('ФИО','Pudow'))
-summary(dfp)
+summary(df[3:12])
 barplot(height=dfp$Pudow, names=dfp$ФИО, col=rgb(0.2,0.4,0.6,0.6),las=2)
 

@@ -57,5 +57,3 @@ for (i in 2:9) {
   }
 }
 par(opar)
-
-

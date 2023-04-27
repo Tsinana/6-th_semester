@@ -1,7 +1,7 @@
 import numpy as np
 
-from classes.Detail import Detail
-from classes.Machine import Machine
+from classes.detail import Detail
+from classes.machine import Machine
 
 
 class Model:

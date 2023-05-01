@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <title>Угадай число</title>
+  </head>
+  <body>
+    <main class="flex_container">
+      <div class="stars" id="stars"></div>
+      <div class="twinkling" id="twinkling"></div>
+      <div class="form">
+        <h1>Угадай число от 1 до 100</h1>
+        <input type="text" id="guess" />
+        <button onclick="checkGuess()">Проверить</button>
+        <p id="message"></p>
+      </div>
+    </main>
+    <script>
+      const secretNumber = Math.floor(Math.random() * 100) + 1;
+
+      function checkGuess() {
+        const guess = Number(document.getElementById("guess").value);
+
+        if (guess === secretNumber) {
+          document.getElementById("twinkling").style.display = "none";
+          document.getElementById("message").textContent =
+            "Поздравляю! Вы угадали число!";
+        } else if (guess > secretNumber) {
+          document.getElementById("message").textContent =
+            "Загаданное число меньше";
+        } else {
+          document.getElementById("message").textContent =
+            "Загаданное число больше";
+        }
+        speed = secretNumber - guess;
+        if (speed < 0) speed *= -1;
+        document.getElementById("twinkling").style.animationDuration = `${
+          speed / 10 + 0.2
+        }s`;
+        console.log("4");
+      }
+    </script>
+  </body>
+</html>

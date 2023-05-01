@@ -50,7 +50,7 @@ def print_result(data):
     file.write('\nТаблица 3 -- Времени требуется для выполниния одной задачи\n')
     field_names = ["Всего времени", "Настройка станка", "Выполнение детали", "Погрешность поломки"]
     all_details = averages[6]
-    all_time = averages[0] / all_details
+    all_time = (averages[0] + averages[3]) / all_details
     time_to_detail = [round(all_time, 2), round(averages[2] / all_details, 2), round(averages[1] / all_details, 2),
                       round(averages[3] / all_details, 2)]
     percentages = [100.0, round((averages[2] / all_details) / all_time * 100, 2),
@@ -58,7 +58,7 @@ def print_result(data):
                    round((averages[3] / all_details) / all_time * 100, 2)]
     my_string_list = list(map(str, percentages))
     my_string_list = list(map(lambda x: x + '%', my_string_list))
-    new_data = [time_to_detail,my_string_list]
+    new_data = [time_to_detail, my_string_list]
     print_table(new_data, field_names, file=file)
     file.write('\nПояснение к таблице:\nПогрешность ошибки - время, потраченное на устранение поломки\n')
 

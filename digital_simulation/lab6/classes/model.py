@@ -34,9 +34,6 @@ class Model:
     self.queue_for_third_machine.sort(key=lambda x: x.time)
     self.start_machine(self.queue_for_second_machine, self.second_machine)
     self.start_machine(self.queue_for_third_machine, self.third_machine)
-    print(self.first_machine.get_status())
-    print(self.second_machine.get_status())
-    print(self.third_machine.get_status())
 
   def start_machine(self, queue, machine):
     for detail in queue:
@@ -64,6 +61,9 @@ class Model:
         self.queue_for_second_machine.append(new_detail)
       else:
         self.queue_for_third_machine.append(new_detail)
+
+  def get_data(self):
+    return [self.first_machine.get_status(),self.second_machine.get_status(),self.third_machine.get_status()]
 
   # Генератор случайных интервалов времени между задачами
   def generate_interval(self):

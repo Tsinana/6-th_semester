@@ -29,7 +29,7 @@ class Machine:
     return detail
 
   def get_status(self):
-    return list(map(lambda x: round(x,4),[self.in_time, self.t_work, self.t_wait, self.t_over, self.c_items_done, self.INTERVAL, self.INTERVAL_ERROR]))
+    return list(map(lambda x: round(x,4),[self.in_time, self.t_work, self.t_wait, self.t_over, self.c_items_done]))
 
   # Генератор случайных интервалов времени между задачами
   def generate_interval(self):

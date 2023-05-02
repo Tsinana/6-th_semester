@@ -9,8 +9,11 @@ class App:
 
   def run(self):
     data = self.form.get_data()
-    processed_data = self.data_hander.run(data)
-    self.form.write_data(processed_data)
+    self.data_hander.set_parameters(data)
+    self.data_hander.run()
+    self.form.write_data(self.data_hander.get_mean_data())
+    self.form.path_output = 'data/log.txt'
+    self.form.write_data(self.data_hander.get_data())
 
 
 if __name__ == '__main__':

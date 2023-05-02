@@ -35,9 +35,8 @@ class Machine:
 
   # Получить все поля машины
   def get_status(self):
-    return [round(self.t_work + self.t_set_up, 4), round(self.t_work, 4), round(self.t_set_up, 4),
-            round(self.t_lost, 4), round(self.t_lost - self.t_repair, 4), round(self.t_repair, 4),
-            round(self.c_items_done, 4), round(self.c_breaks, 4)]
+    return [round(self.t_work + self.t_set_up + self.t_lost - self.t_repair, 4), round(self.t_work + self.t_set_up, 4),
+            round(self.t_repair, 4), round(self.t_repair, 4), round(self.c_breaks, 4)]
 
   # Генератор случайного времени выполнения задачи
   @staticmethod

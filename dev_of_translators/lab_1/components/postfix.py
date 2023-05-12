@@ -10,15 +10,32 @@ class OPZ:
     # prec = {'*': 2, '/': 2, '+': 1, '-': 1, '(': 0}
     funs = {'f': 2}
     vals = {'a': 0, 'b': 1,'с': 1,'d': 1,'i': 1,'j': 1,'y': 1,'x': 1,'z': 1}
-    prec = {'**': 9,'*': 8, '/': 8, '+': 7,'-': 7,'<': 6,'>': 6,'==': 6,'!': 5,'&': 4, 'V': 3,'=': 2,'THEN': 1,';': 1,'ELSE': 1, ')': 1, ']': 1, ',': 1, '(': 0, '[': 0, 'АЭМ': 0, 'Ф': 0, 'IF': 0}
+    prec = {'**': 9,'*': 8, '/': 8, '+': 7,'-': 7,'<': 6,'>': 6,'==': 6,'!': 5,'&': 4, 'V': 3,'/n' : 2,'=': 2,'THEN': 1,';': 1,'ELSE': 1, ')': 1, ']': 1, ',': 1, '(': 0, '[': 0, 'АЭМ': 0, 'Ф': 0, 'IF': 0}
     aem_counter = 1
     f_counter = 1
     if_counter = 1
+    do_counter = 1
+    do_lvl = 1
     flag_f = 0
     flag_if = 0
     for token in self.expr:
       if token.isdigit() or token in vals:
         output.append(token)
+
+      elif token == "{":
+        while len(stack) != 0:
+          output.append(stack.pop())
+
+        output.append(f"{do_counter}_{do_lvl}_НП")
+        do_lvl += 1
+        do_counter += 1
+
+      elif token == "}":
+        while len(stack) != 0:
+          output.append(stack.pop())
+
+        output.append(f"{do_counter}_{do_lvl}_КО")
+        do_lvl -= 1
 
       elif token == 'IF':
         stack.append(token)

@@ -1,0 +1,234 @@
+как обновить окно при нажатии кнопки
+
+Чтобы обновить окно при нажатии кнопки, можно использовать метод update() или update_idletasks() экземпляра класса Tk().
+
+Например, если у вас есть кнопка button и функция on_button_click(), которая обновляет содержимое окна, то можно добавить следующий код внутри функции:
+
+ruby
+
+def on_button_click():
+    # Обновляем содержимое окна
+    ...
+    
+    # Обновляем окно с помощью метода update()
+    root.update()
+
+Если ваше приложение имеет множество элементов, которые требуется обновлять, то можно воспользоваться методом update_idletasks(), который обновляет только те элементы, которые находятся в очереди на обновление и не занимает процессорное время на обработку других событий.
+
+Например:
+
+ruby
+
+def on_button_click():
+    # Обновляем содержимое окна
+    ...
+    
+    # Обновляем окно с помощью метода update_idletasks()
+    root.update_idletasks()
+
+Оба эти метода вызывают обработчик событий и позволяют обновить содержимое окна немедленно.
+ivzhenkocsgo@mail.ru
+Пользователь вводит данные в окно класса Form, программа обрабатывает данные  в классе DataHendler и вывод их обратно в форму. как реализовать структуру проекта 
+
+Для реализации такой структуры проекта можно использовать следующий подход:
+
+    Создайте класс Form, который будет содержать методы для отображения и получения данных из пользовательского интерфейса (UI).
+
+    Создайте класс DataHandler, который будет содержать методы для обработки полученных данных из UI.
+
+    Создайте класс App, который будет использовать классы Form и DataHandler для связывания пользовательского интерфейса и бизнес-логики.
+
+    Реализуйте методы класса Form для получения данных из пользовательского интерфейса. Например:
+
+python
+
+class Form:
+    def __init__(self, root):
+        self.root = root
+        self.entry = tk.Entry(self.root)
+        self.entry.pack()
+        self.button = tk.Button(self.root, text="Submit", command=self.submit)
+        self.button.pack()
+    
+    def submit(self):
+        data = self.entry.get()
+        # Отправляем данные в DataHandler для обработки
+
+    Реализуйте методы класса DataHandler для обработки полученных данных и возврата результатов. Например:
+
+ruby
+
+class DataHandler:
+    def process_data(self, data):
+        # Обрабатываем данные
+        ...
+        # Возвращаем результаты
+        return processed_data
+
+    Свяжите классы Form и DataHandler в классе App. Например:
+
+ruby
+
+class App:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.form = Form(self.root)
+        self.data_handler = DataHandler()
+
+    def run(self):
+        self.root.mainloop()
+
+    def handle_data(self, data):
+        processed_data = self.data_handler.process_data(data)
+        # Отправляем обработанные данные обратно в форму
+        ...
+
+    Реализуйте методы класса Form для отображения результатов обработки данных. Например:
+
+ruby
+
+class Form:
+    def __init__(self, root):
+        ...
+        self.result_label = tk.Label(self.root, text="")
+        self.result_label.pack()
+
+    def display_result(self, result):
+        self.result_label.config(text=result)
+
+    Обновите метод submit() класса Form, чтобы отправлять данные в DataHandler, обрабатывать результаты и отображать их в пользовательском интерфейсе. Например:
+
+ruby
+
+class Form:
+    def submit(self):
+        data = self.entry.get()
+        processed_data = App.data_handler.process_data(data)
+        self.display_result(processed_data)
+
+    Запустите приложение с помощью метода run() класса App. Например:
+
+markdown
+
+if __name__ == '__main__':
+    app = App()
+    app.run()
+
+Эта структура проекта позволит легко связать пользовательский интерфейс и бизнес-логику, а также обеспечить возможность расширения и изменения функционала в дальнейшем.
+ivzhenkocsgo@mail.ru
+в примере выше логика и отражение связываются в классе Form  а не в App 
+
+Да, в примере выше логика и отображение связываются в классе Form. Это связано с тем, что класс Form представляет графический интерфейс и отвечает за ввод данных пользователем и отображение их на экране. Класс DataHandler, в свою очередь, отвечает за обработку этих данных. Таким образом, класс Form выполняет роль посредника между пользовательским вводом и логикой приложения.
+
+Однако, можно организовать структуру проекта таким образом, чтобы класс App выполнял роль контроллера, который связывает классы Form и DataHandler. В этом случае класс App будет отвечать за обработку пользовательского ввода, передачу данных на обработку в класс DataHandler и обновление графического интерфейса на основе результатов обработки данных.
+
+Пример структуры проекта с использованием класса App:
+
+markdown
+
+- my_app/
+  - __init__.py
+  - app.py
+  - classes/
+    - __init__.py
+    - form.py
+    - data_handler.py
+
+В файле app.py будет находиться класс App, который будет отвечать за запуск приложения и связывание классов Form и DataHandler.
+
+В файле form.py будет находиться класс Form, который будет отвечать за отображение графического интерфейса и получение пользовательского ввода.
+
+В файле data_handler.py будет находиться класс DataHandler, который будет отвечать за обработку данных.
+
+Пример кода:
+
+python
+
+# app.py
+import tkinter as tk
+from classes.form import Form
+from classes.data_handler import DataHandler
+
+class App:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.form = Form(self.root)
+        self.data_handler = DataHandler()
+
+        self.form.bind_submit(self.handle_submit)
+
+    def handle_submit(self, data):
+        processed_data = self.data_handler.process_data(data)
+        self.form.update_output(processed_data)
+
+    def run(self):
+        self.root.mainloop()
+
+python
+
+# form.py
+import tkinter as tk
+
+class Form:
+    def __init__(self, master):
+        self.master = master
+        self.input_entry = tk.Entry(self.master)
+        self.output_label = tk.Label(self.master)
+
+        self.submit_button = tk.Button(
+            self.master,
+            text="Submit",
+            command=self.submit_data
+        )
+
+        self.input_entry.pack()
+        self.submit_button.pack()
+        self.output_label.pack()
+
+    def submit_data(self):
+        data = self.input_entry.get()
+        self.submit_callback(data)
+
+    def bind_submit(self, callback):
+        self.submit_callback = callback
+
+    def update_output(self, output):
+        self.output_label.config(text=output)
+
+python
+
+# data_handler.py
+class DataHandler:
+    def process_data(self, data):
+        # process data
+        return processed_data
+
+Здесь метод handle_submit в классе App принимает данные от класса Form, обрабатывает и
+ivzhenkocsgo@mail.ru
+разве после вызова    self.root.mainloop() мы можем как то вызывать функции для обработки данных?
+
+Да, после вызова self.root.mainloop() интерфейс приложения начинает работу и ждет взаимодействия от пользователя, но это не мешает вызывать функции для обработки данных. Вы можете связать эти функции с различными событиями, такими как нажатие кнопки или изменение значения поля ввода, используя методы привязки событий, такие как .bind() или .command. Когда событие происходит, связанная с ним функция вызывается. Вот пример, демонстрирующий связывание функции обработки события нажатия на кнопку:
+
+python
+
+import tkinter as tk
+
+class App:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.form = tk.Frame(self.root)
+        self.button = tk.Button(self.form, text="Нажмите меня")
+        self.button.pack()
+        self.button.bind("<Button-1>", self.handle_button_click) # привязка функции к событию нажатия на кнопку
+
+    def run(self):
+        self.root.mainloop()
+
+    def handle_button_click(self, event):
+        print("Кнопка была нажата") # здесь можно вызвать функцию для обработки данных
+
+if __name__ == '__main__':
+    app = App()
+    app.run()
+
+В этом примере, функция handle_button_click() вызывается, когда пользователь нажимает на кнопку. Внутри этой функции вы можете вызвать функцию для обработки данных, передав данные из формы в эту функцию, и затем обновить интерфейс приложения с помощью методов изменения значений виджетов.

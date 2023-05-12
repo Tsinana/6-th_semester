@@ -6,7 +6,7 @@ class store_dicts:
 
 
   def get_table_of_service_words(self):
-    list_oper = ['if','print','else','c','ifelse','for','in','while','repeat','sum','len']
+    list_oper = ['/n','if','print','else','c','ifelse','for','in','while','repeat','sum','len']
     return {list_oper[i]: i for i in range(len(list_oper))}
 
 

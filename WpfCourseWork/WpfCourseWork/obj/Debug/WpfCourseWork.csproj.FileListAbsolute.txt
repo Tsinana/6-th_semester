@@ -19,3 +19,5 @@ C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\WpfC
 C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\WpfCourseWork.pdb
 C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\NewTaskDialog.g.cs
 C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\NewTaskDialog.baml
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\ProjectSetup.g.cs
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\ProjectSetup.baml

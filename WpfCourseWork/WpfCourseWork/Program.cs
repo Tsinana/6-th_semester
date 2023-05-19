@@ -1,16 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Controls;
+using WpfCourseWork;
 
 namespace WpfCourseWork {
 
     public class Program {
         static Random rnd = new Random();
         static string _lastGeneration;
+        static int _without_any_act;
+        static double _max_temperature;
+        static double _a;
 
-
-        public void StartMachine() {
-            start();
+        public void Set_paraments(int without_any_act,
+        double max_temperature,
+        double a) {
+              _without_any_act = without_any_act;
+              _max_temperature = max_temperature;
+              _a = a;
+        }
+        
+        public void StartMachine(List<Box> list_box, Bin bin) {
+            start(list_box, bin);
         }
 
 
@@ -20,26 +32,32 @@ namespace WpfCourseWork {
         }
 
 
-        private static void start() {
-            string file_name = CreateFolder(get_date_time(), "../../data");
-
-            List<Box> list_box;
-            Bin bin;
-            (list_box, bin) = Generation_list_box();
+        private static void start(List<Box> list_box, Bin bin) {
+            string file_name = CreateFolder(Get_date_time(), "../../data");
 
             list_box.Sort(delegate (Box box1, Box box2) { return box2.Volume.CompareTo(box1.Volume); });
 
             List<Box> ans_list_box;
             int i = 0;
 
-            (ans_list_box, i, _, _, _) = Annealing_method(bin, list_box, 100, 10000, 0.999995, file_name);
+            (ans_list_box, i, _, _, _) = Annealing_method(bin, list_box, _without_any_act, _max_temperature, _a, file_name);
 
             Print_list_box(ans_list_box, bin, i, file_name);
+            Create_input(file_name, list_box, bin);
         }
 
-        private static string get_date_time() {
+        private static string Get_date_time() {
             DateTime now = DateTime.Now;
             return now.ToShortDateString().Replace('/', '-') + "_" + now.ToShortTimeString().Replace(':', '-').Replace(' ', '_');
+        }
+
+        private static void Create_input(string file_name, List<Box> list_box, Bin bin) {
+            StreamWriter sw = new StreamWriter($"../../data/{file_name}/input_{file_name}.txt");
+            sw.WriteLine($"{bin.Length} {bin.Width} {bin.Heigth}");
+            foreach (Box box in list_box) {
+                sw.WriteLine($"{box.Length} {box.Width} {box.Heigth}");
+            }
+            sw.Close();
         }
 
         private static string CreateFolder(string name, string path) {
@@ -236,7 +254,7 @@ namespace WpfCourseWork {
             List<((int, int, int), Box)> sequence_box = Generation_sequence_box(list_box, bin);
             StreamWriter sw = new StreamWriter($"../../data/{file_name}/output_{file_name}.txt");
             double energy = Calculate_energy(sequence_box, bin);
-            sw.WriteLine("Найден на шаге: " + i + "\tЭнергетическая функция: " + energy);
+            sw.WriteLine("Найден на шаге: " + i + "\tЭнергетическая функция: " + Math.Round(energy, 4));
             foreach (var item in sequence_box)
                 sw.WriteLine(Convert.ToString(item.Item1) + "\t" + Convert.ToString(item.Item2.Size) + "\t" + item.Item2.XYZ);
             sw.Close();
@@ -261,9 +279,6 @@ namespace WpfCourseWork {
             List<Box> list_box = new List<Box>();
             StreamReader sr = new StreamReader("../../data/input.txt");
 
-            string sourceFilePath = "../../data/input.txt";
-            string destinationFilePath = $"../../data/{_lastGeneration}/input_{_lastGeneration}.txt";
-            File.Copy(sourceFilePath, destinationFilePath);
 
             if (sr.Peek() != -1) {
                 string line = sr.ReadLine();
@@ -285,9 +300,9 @@ namespace WpfCourseWork {
                     if (bin.Volume == 0)
                         bin = new Bin(size[0], size[1], size[2]);
                     else
-                                                                                                        /*if (bin.Size.Item1 >= size[0] &&
-                                                                                                            bin.Size.Item2 >= size[1] &&
-                                                                                                            bin.Size.Item3 >= size[2])*/ {
+                                                                                                                /*if (bin.Size.Item1 >= size[0] &&
+                                                                                                                    bin.Size.Item2 >= size[1] &&
+                                                                                                                    bin.Size.Item3 >= size[2])*/ {
                         Box box = new Box(size[0], size[1], size[2], 0);
                         list_box.Add(box);
                     }
@@ -304,5 +319,27 @@ namespace WpfCourseWork {
             } else
                 throw new Exception("input is empty");
         }
+
+        private static void Copy_input() {
+            string sourceFilePath = "../../data/input.txt";
+            string destinationFilePath = $"../../data/{_lastGeneration}/input_{_lastGeneration}.txt";
+            File.Copy(sourceFilePath, destinationFilePath);
+        }
     }
 }
+//private static void start() {
+//    string file_name = CreateFolder(get_date_time(), "../../data");
+
+//    List<Box> list_box;
+//    Bin bin;
+//    (list_box, bin) = Generation_list_box();
+
+//    list_box.Sort(delegate (Box box1, Box box2) { return box2.Volume.CompareTo(box1.Volume); });
+
+//    List<Box> ans_list_box;
+//    int i = 0;
+
+//    (ans_list_box, i, _, _, _) = Annealing_method(bin, list_box, 100, 10000, 0.999995, file_name);
+
+//    Print_list_box(ans_list_box, bin, i, file_name);
+//}

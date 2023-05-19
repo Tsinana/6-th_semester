@@ -1,8 +1,13 @@
 ﻿using HelixToolkit.Wpf;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -12,10 +17,12 @@ namespace WpfCourseWork {
     /// </summary>
     public partial class MainWindow : Window {
         static Random rnd = new Random();
+        static Program _machine;
+        public string MyData { get; set; }
         public MainWindow() {
 
             InitializeComponent();
-
+            _machine = new Program();
 
             //var machine = new Program();
             //machine.StartMachine();
@@ -26,15 +33,55 @@ namespace WpfCourseWork {
         }
 
         private void Start(string file_name) {
+            viewport.Children.Clear();
+            viewport.Children.Add(new SunLight());
             Print_scene(file_name);
             Print_boxes(Read_parse_file(file_name));
+            Set_Text(file_name);
+            hide_start_menu();
         }
 
+        public void Start(ObservableCollection<Box> list_box,Bin bin) {
+            List<Box> boxList = list_box.ToList();
+            Set_machine_parametrs();
+            _machine.StartMachine(boxList, bin);
+            Start(_machine.LastGeneration);
+            hide_start_menu();
+        }
+
+        public void Set_machine_parametrs() {
+            StreamReader reader = new StreamReader("machine_paramentrs.txt");
+            string all_strings = reader.ReadToEnd().Replace("\n","").Replace("\r","");
+            reader.Close();
+            string[] arr = all_strings.Split(' ');
+            _machine.Set_paraments(Convert.ToInt32(arr[0]), Convert.ToDouble(arr[1]), Convert.ToDouble(arr[2]));
+        }
+
+        public void Set_Text(string file_name) {
+            StreamReader sr_r = new StreamReader($"C:\\Users\\Tsinana\\GitHub\\6-th_semester\\WpfCourseWork\\WpfCourseWork\\data\\{file_name}\\output_{file_name}.txt");
+            StreamReader sr_l = new StreamReader($"C:\\Users\\Tsinana\\GitHub\\6-th_semester\\WpfCourseWork\\WpfCourseWork\\data\\{file_name}\\log_{file_name}.txt");
+
+            tb_r.Text = sr_r.ReadToEnd();
+            tb_l.Text = sr_l.ReadToEnd();
+
+            sr_r.Close();
+            sr_l.Close();
+        }
+
+        private void hide_start_menu() { 
+            l_shift.Visibility = Visibility.Collapsed;
+            l_start.Visibility = Visibility.Collapsed;
+            b_new.Visibility = Visibility.Collapsed;
+            b_open.Visibility = Visibility.Collapsed;
+            gridMain.Visibility = Visibility.Visible;
+            viewport.Visibility = Visibility.Visible;
+        }
 
         private void Print_scene(string file_name) {
             int[] size_container = Get_size_of_container(file_name);
             Print_container(size_container[0], size_container[1], size_container[2]);
             Print_oXYZ(size_container[0], size_container[1], size_container[2]);
+            viewport.Camera.Position = new Point3D((Convert.ToDouble(size_container[0])/2) + 2, (Convert.ToDouble(size_container[1])/2) + 16, (Convert.ToDouble(size_container[2])/2) + 20);
         }
 
         private static int[] Get_size_of_container(string file_name) {
@@ -203,11 +250,11 @@ namespace WpfCourseWork {
         // Прослушка кнопок
         //
         private void MenuNew_Click(object sender, RoutedEventArgs e) {
-            WpfCourseWork.NewTaskDialog dialog = new WpfCourseWork.NewTaskDialog();
+            WpfCourseWork.NewTaskDialog dialog = new WpfCourseWork.NewTaskDialog(this);
             dialog.ShowDialog();
         }
 
-        //Получает название директории 
+        //Получает название директории             Close();MenuExit_Click Set_parameters_Click
         private void MenuOpen_Click(object sender, RoutedEventArgs e) {
             string path;
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -216,6 +263,15 @@ namespace WpfCourseWork {
                 string[] arr = path.Split('\\');
                 Start(arr[arr.Length - 2]);
             }
+        }
+
+        private void MenuExit_Click(object sender, RoutedEventArgs e) {
+            Close();
+        }
+
+        private void SetParameters_Click(object sender, RoutedEventArgs e) {
+            WpfCourseWork.ProjectSetup dialog = new WpfCourseWork.ProjectSetup(this);
+            dialog.ShowDialog();
         }
     }
 }

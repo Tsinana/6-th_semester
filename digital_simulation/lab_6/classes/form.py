@@ -14,4 +14,4 @@ class Form:
 
   def write_data(self,data):
     with open(self.path_output,'w') as file:
-        file.write("data")
+        file.write(data)

@@ -1,7 +1,11 @@
 from components.converter import Converter
+from components.infix import infix
+from components.lab_4 import lab4
 from components.postfix import OPZ
 from components.store_dictrs import store_dicts
 import re
+
+
 
 def replace_data(txt,dict,nameDict):
   for k,v in dict.items():
@@ -145,30 +149,18 @@ def treat_text(txt,dicts):
 
 
 if __name__ == '__main__':
-  # SD = store_dicts()
-  # dicts = SD.get_all_compiled_dictionaries()
+  SD = store_dicts()
+  dicts = SD.get_all_compiled_dictionaries()
   # with open("program_r.r", "r") as f:
   #   data = f.read()
-
-  # with open("prog_in_code.txt", "w") as f:
-  #   print(treat_text(data,dicts), file=f)
-
-  expr = input("Введите выражение в инфиксной форме: ").split()
-  opz = OPZ(expr)
-  postfix_expr = opz.infix_to_postfix()
-  print("Выражение в ОПЗ: ", postfix_expr)
-
-  # expr = input("Введите выражение в обратной польской записи: ").split()
-  # opz = OPZ(postfix_expr.split())
-  # result = opz.eval_postfix()
-  # print("Результат вычислений:", result)
-  # expression = "a = 45 \na = a + 10 / 2\nif (a > 30) {\n  i <- 0\n  while(i == 3){\n    print(c(i,a,s,d,f))\n    i = i + 1\n  }\n} else {\n  print(c('biba'))\n}"
-  # tokens = re.findall(r'\d+\.?\d*|[A-Za-z]+|\S', expression)
+  #   ext = treat_text(data,dicts).split()
+  #   # ext1 = input().split()
+  #   opz = OPZ(ext, dicts)
+  #   postfix_expr = opz.infix_to_postfix()
+  #   print("Выражение в ОПЗ: ", postfix_expr)
   #
-  # convector = Converter()
-  # # result = convector.translate_form_infix_to_postfix(tokens)
-  #
-  # tokens = ['a', '45', '=', 'a', '10', '2', '/', '+', 'a', '30', '>', 'if', 'i', '0', '<-', 'i', '3', '==', 'while', 'i', 'a', 's', 'd', 'f', 'print', 'c']
-  #
-  # result = convector.translate_from_postfix_to_infix(tokens)
-  # print(result)
+  #   infx = infix(postfix_expr.split(), dicts)
+  #   infx.start()
+  with open("program_r.r", "r") as f:
+    obj_lab4 = lab4(f.read(),dicts)
+    obj_lab4.run()

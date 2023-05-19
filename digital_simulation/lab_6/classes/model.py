@@ -1,3 +1,4 @@
+from prettytable import PrettyTable
 import numpy as np
 
 from classes.detail import Detail
@@ -5,8 +6,9 @@ from classes.machine import Machine
 
 
 class Model:
-  def __init__(self, count_details, task_p_for_the_second_machine_from_first_machine,
+  def __init__(self, count_details,
                task_p_for_the_first_machine, task_p_for_the_second_machine,
+               task_p_for_the_second_machine_from_first_machine,
                task_generation_interval, task_generation_interval_error,
                interval_for_first_machine, interval_error_for_first_machine,
                interval_for_second_machine, interval_error_for_second_machine,
@@ -19,6 +21,10 @@ class Model:
     self.task_p_for_the_second_machine_from_first_machine = task_p_for_the_second_machine_from_first_machine
     self.in_time = 0
 
+    self.interval_for_first_machine =interval_for_first_machine
+    self.interval_for_second_machine =interval_for_second_machine
+    self.interval_for_third_machine =interval_for_third_machine
+
     self.first_machine = Machine(interval_for_first_machine, interval_error_for_first_machine)
     self.second_machine = Machine(interval_for_second_machine, interval_error_for_second_machine)
     self.third_machine = Machine(interval_for_third_machine, interval_error_for_third_machine)
@@ -29,11 +35,19 @@ class Model:
 
   def start(self):
     self.generate_queue()
+    self.first_machine.last_detail = self.in_time
+    self.second_machine.last_detail = self.in_time
+    self.third_machine.last_detail = self.in_time
     self.start_first_machine()
     self.queue_for_second_machine.sort(key=lambda x: x.time)
     self.queue_for_third_machine.sort(key=lambda x: x.time)
     self.start_machine(self.queue_for_second_machine, self.second_machine)
+    print("\n\n\n")
     self.start_machine(self.queue_for_third_machine, self.third_machine)
+
+    self.first_machine.t_over /= self.count_details
+    self.second_machine.t_over /= self.count_details
+    self.third_machine.t_over /= self.count_details
 
   def start_machine(self, queue, machine):
     for detail in queue:

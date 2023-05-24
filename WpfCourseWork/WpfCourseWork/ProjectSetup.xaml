@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfCourseWork"
+        xmlns:sys="clr-namespace:WpfCourseWork"
         mc:Ignorable="d"
         Title="ProjectSetup" Height="250" Width="800" FontSize="14">
     <Grid  ShowGridLines="False">
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
@@ -25,8 +26,13 @@
         <Label Grid.Column="0" Grid.Row="2" Content="Максимальная температура:"  />
         <TextBox Grid.Column="2" Grid.Row="2" Name="max_temperature" Background="#FFDDDDDD" Margin="15 4"/>
         <Label Grid.Column="0" Grid.Row="3" Content="Параментр принятия нового решения:"  />
+        <Label Grid.Column="0" Grid.Row="4" Content="Эвристика укладки блоков:"  />
+        <ComboBox  Grid.Column="1" Grid.Row="4" Margin="15 4" Name="cb">
+            <ComboBoxItem>First Fit - первый подходящий</ComboBoxItem>
+            <ComboBoxItem IsSelected="True">Best Fit - лучший подходящий</ComboBoxItem>
+        </ComboBox>
         <TextBox Grid.Column="2" Grid.Row="3" Name="a" Background="#FFDDDDDD" Margin="15 4" />
-        <Button Grid.Column="0" Grid.Row="4" Content="Отмена" Click="Esc_Click" Margin="0,30,0,0" />
-        <Button Grid.Column="2" Grid.Row="4" Content="Готово"  Click="Ok_Click" Margin="0,30,0,0" />
+        <Button Grid.Column="0" Grid.Row="5" Content="Отмена" Click="Esc_Click" Margin="0,30,0,0" />
+        <Button Grid.Column="2" Grid.Row="5" Content="Готово"  Click="Ok_Click" Margin="0,30,0,0" />
     </Grid>
 </Window>

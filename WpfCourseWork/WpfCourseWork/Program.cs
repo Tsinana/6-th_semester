@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Controls;
-using WpfCourseWork;
 
 namespace WpfCourseWork {
 
@@ -16,12 +14,13 @@ namespace WpfCourseWork {
         public void Set_paraments(int without_any_act,
         double max_temperature,
         double a) {
-              _without_any_act = without_any_act;
-              _max_temperature = max_temperature;
-              _a = a;
+            _without_any_act = without_any_act;
+            _max_temperature = max_temperature;
+            _a = a;
         }
-        
+
         public void StartMachine(List<Box> list_box, Bin bin) {
+            start_analysis(list_box, bin);
             start(list_box, bin);
         }
 
@@ -29,6 +28,57 @@ namespace WpfCourseWork {
         public string LastGeneration {
             get => _lastGeneration;
             set => _lastGeneration = value;
+        }
+
+        private static void start_analysis(List<Box> list_box, Bin bin) {
+
+            int count_iter = 50;
+            double max_temperature = _max_temperature;
+            double a = _a;
+
+            int from_temp = 100;
+            int to_temp = 1000;
+            int step_temp = 100;
+
+            double from_a = 0.1;
+            double to_a = 1;
+            double step_a = 0.1;
+            StreamWriter sw = new StreamWriter($"../../analysis/temp.csv");
+            for (int i = from_temp; i < to_temp; i += step_temp)
+                sw.Write($"{i},");
+            sw.Write("\n");
+            sw.Close();
+
+            StreamWriter swa = new StreamWriter($"../../analysis/a.csv");
+            for (double i = from_a; i < to_a; i += step_a)
+                swa.Write($"{i},");
+            swa.Write("\n");
+            swa.Close();
+
+            StreamWriter swe = new StreamWriter($"../../analysis/cf.csv");
+            for (int i = from_temp; i < to_temp; i += step_temp) {
+                _max_temperature = i;
+                for (double j = from_a; j < to_a; j += step_a) {
+                    _a = j;
+                    List<Box> ans_list_box;
+                    int k = 0;
+                    list_box.Sort(delegate (Box box1, Box box2) { return box2.Volume.CompareTo(box1.Volume); });
+                    double sum_of_energy = 0;
+                    for (int iter = 0; iter < count_iter; iter++) {
+                        (ans_list_box, k, _, _, _) = Annealing_method(bin, list_box, _without_any_act, _max_temperature, _a, _lastGeneration);
+                        List<((int, int, int), Box)> sequence_box = Generation_sequence_box(ans_list_box, bin);
+                        double energy = Calculate_energy(sequence_box, bin);
+                        sum_of_energy += energy;
+                    }
+
+                    swe.Write($"{Math.Round(sum_of_energy/count_iter, 4)},");
+                }
+            }
+            swe.Write("\n");
+            swe.Close();
+
+            _max_temperature = max_temperature;
+            _a = a;
         }
 
 
@@ -254,7 +304,7 @@ namespace WpfCourseWork {
             List<((int, int, int), Box)> sequence_box = Generation_sequence_box(list_box, bin);
             StreamWriter sw = new StreamWriter($"../../data/{file_name}/output_{file_name}.txt");
             double energy = Calculate_energy(sequence_box, bin);
-            sw.WriteLine("Найден на шаге: " + i + "\tЭнергетическая функция: " + Math.Round(energy, 4));
+            sw.WriteLine("Найден на шаге: " + i + "\nЭнергетическая функция: " + Math.Round(energy, 4));
             foreach (var item in sequence_box)
                 sw.WriteLine(Convert.ToString(item.Item1) + "\t" + Convert.ToString(item.Item2.Size) + "\t" + item.Item2.XYZ);
             sw.Close();
@@ -263,7 +313,7 @@ namespace WpfCourseWork {
 
             foreach (var item in sequence_box)
                 if (item.Item1.Item1 != -1)
-                    sw2.WriteLine( (Convert.ToString(item.Item1) + "," + Convert.ToString(item.Item2.Size)).Replace("(", "").Replace(")", "").Replace(" ", ""));
+                    sw2.WriteLine((Convert.ToString(item.Item1) + "," + Convert.ToString(item.Item2.Size)).Replace("(", "").Replace(")", "").Replace(" ", ""));
 
             sw2.Close();
         }
@@ -300,9 +350,9 @@ namespace WpfCourseWork {
                     if (bin.Volume == 0)
                         bin = new Bin(size[0], size[1], size[2]);
                     else
-                                                                                                                /*if (bin.Size.Item1 >= size[0] &&
-                                                                                                                    bin.Size.Item2 >= size[1] &&
-                                                                                                                    bin.Size.Item3 >= size[2])*/ {
+                                                                                                                    /*if (bin.Size.Item1 >= size[0] &&
+                                                                                                                        bin.Size.Item2 >= size[1] &&
+                                                                                                                        bin.Size.Item3 >= size[2])*/ {
                         Box box = new Box(size[0], size[1], size[2], 0);
                         list_box.Add(box);
                     }

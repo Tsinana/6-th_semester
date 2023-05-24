@@ -151,16 +151,16 @@ def treat_text(txt,dicts):
 if __name__ == '__main__':
   SD = store_dicts()
   dicts = SD.get_all_compiled_dictionaries()
-  # with open("program_r.r", "r") as f:
-  #   data = f.read()
-  #   ext = treat_text(data,dicts).split()
-  #   # ext1 = input().split()
-  #   opz = OPZ(ext, dicts)
-  #   postfix_expr = opz.infix_to_postfix()
-  #   print("Выражение в ОПЗ: ", postfix_expr)
-  #
-  #   infx = infix(postfix_expr.split(), dicts)
-  #   infx.start()
   with open("program_r.r", "r") as f:
-    obj_lab4 = lab4(f.read(),dicts)
-    obj_lab4.run()
+    data = f.read()
+    ext = treat_text(data,dicts).split()
+    # ext1 = input().split()
+    opz = OPZ(ext, dicts)
+    postfix_expr = opz.infix_to_postfix()
+    print("Выражение в ОПЗ: ", postfix_expr)
+
+    infx = infix(postfix_expr.split(), dicts)
+    infx.start()
+  # with open("program_r.r", "r") as f:
+  #   obj_lab4 = lab4(f.read(),dicts)
+  #   obj_lab4.run()

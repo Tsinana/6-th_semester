@@ -135,7 +135,7 @@ class lab4:
     while self.NXTSYMB == '*':
       self.SCAN()
       self.FACTOR()
-
+ф
   def FACTOR(self):
     if self.NXTSYMB == '(':
       self.SCAN()

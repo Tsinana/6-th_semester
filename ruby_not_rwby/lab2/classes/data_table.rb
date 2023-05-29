@@ -16,6 +16,6 @@ class DataTable
     self.data.length
   end
 
-    private
-  attr_accessor :data
+  private
+    attr_accessor :data
 end

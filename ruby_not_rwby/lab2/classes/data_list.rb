@@ -1,9 +1,7 @@
 class DataList
-  attr_accessor :selected
-	attr_reader :data
 
 	def initialize(data)
-    @data = data
+    self.data = data
     self.selected = []
   end
 
@@ -15,7 +13,7 @@ class DataList
   def get_selected
     id_array = []
     self.selected.each do |index|
-      id_array << self.data[index]#.id
+      id_array << self.index[0]#.id
     end
     id_array
   end
@@ -25,4 +23,9 @@ class DataList
 
   def get_data
   end
+
+  private
+    attr_accessor :selected
+    attr_reader :data
+
 end

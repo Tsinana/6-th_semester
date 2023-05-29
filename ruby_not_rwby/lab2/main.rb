@@ -18,10 +18,10 @@ begin
 
 
 table_data = [
-  ['Name', 'Age', 'Gender'],
-  ['John', 25, 'Male'],
-  ['Jane', 30, 'Female'],
-  ['Bob', 45, 'Male']
+  ['id', 'Name', 'Age', 'Gender'],
+  [1, 'John', 25, 'Male'],
+  [2, 'Jane', 30, 'Female'],
+  [3, 'Bob', 45, 'Male']
 ]
 
 table = DataTable.new(table_data)

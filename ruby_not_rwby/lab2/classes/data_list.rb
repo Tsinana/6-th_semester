@@ -7,7 +7,6 @@ class DataList
     self.selected = []
   end
 
-
 # Найти объект по индексу
   def select(number)
     self.selected << number
@@ -20,7 +19,6 @@ class DataList
     end
     id_array
   end
-
 
   def get_names
   end

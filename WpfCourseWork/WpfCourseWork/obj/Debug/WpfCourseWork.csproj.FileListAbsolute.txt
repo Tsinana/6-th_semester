@@ -21,3 +21,10 @@ C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\NewT
 C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\NewTaskDialog.baml
 C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\ProjectSetup.g.cs
 C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\obj\Debug\ProjectSetup.baml
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\bin\Debug\DynamicInterop.dll
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\bin\Debug\Microsoft.Win32.Registry.dll
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\bin\Debug\RDotNet.dll
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\bin\Debug\System.Security.AccessControl.dll
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\bin\Debug\DynamicInterop.xml
+C:\Users\Tsinana\GitHub\6-th_semester\WpfCourseWork\WpfCourseWork\bin\Debug\RDotNet.xml

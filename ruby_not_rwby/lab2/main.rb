@@ -1,13 +1,11 @@
-require './classes/student'
-require './classes/student_short'
-require './classes/data_table'
-require './classes/data_list'
+require_relative './classes/data_table'
+
 
 
 
 begin
 
-Student.read_from_txt('./data/data_file.txt')
+# Student.read_from_txt('./data/data_file.txt')
 
 # students = Student.get_students
 # students.each do |student|
@@ -31,10 +29,7 @@ table = DataTable.new(table_data)
 puts table.get_cell(2, 1) # Выводит "30"
 puts table.num_columns # Выводит "3"
 puts table.num_rows # Выводит "4"
-table.data.map!{|val| val=0}
-puts table.get_cell(2, 1) # Выводит "30"
-puts table.num_columns # Выводит "3"
-puts table.num_rows # Выводит "4"
+
 
 
 # table_list = ['O1','O2','O3','O4','O5']

@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WpfCourseWork {
-    /// <summary>
-    /// Логика взаимодействия для ProjectSetup.xaml
-    /// </summary>
+
     public partial class ProjectSetup : Window {
         private static MainWindow _ob;
         public ProjectSetup(MainWindow ob) {
@@ -24,6 +11,7 @@ namespace WpfCourseWork {
             _ob = ob;
             Set_machine_parametrs();
         }
+
 
         public void Set_machine_parametrs() {
             StreamReader reader = new StreamReader("machine_paramentrs.txt");
@@ -33,10 +21,14 @@ namespace WpfCourseWork {
             without_any_act.Text = arr[0];
             max_temperature.Text = arr[1];
             a.Text = arr[2];
-}
+        }
+
+
         private void Esc_Click(object sender, RoutedEventArgs e) {
             Close();
         }
+
+
         private void Ok_Click(object sender, RoutedEventArgs e) {
             StreamWriter sw = new StreamWriter($"machine_paramentrs.txt");
 

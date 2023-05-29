@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "6Dh6enY6WabxzDuljmZYLfRBLwa2FaUXuoildBmtXrXOke+qW5cSxKZFz57HZiHXwsRC+3ZZ7kewlj5D4CJb0g==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Tsinana\\GitHub\\6-th_semester\\ConsoleApp2\\ConsoleApp2\\ConsoleApp2.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Tsinana\\.nuget\\packages\\dynamicinterop\\0.9.1\\dynamicinterop.0.9.1.nupkg.sha512",
+    "C:\\Users\\Tsinana\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Tsinana\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
+    "C:\\Users\\Tsinana\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
+    "C:\\Users\\Tsinana\\.nuget\\packages\\r.net\\1.9.0\\r.net.1.9.0.nupkg.sha512",
+    "C:\\Users\\Tsinana\\.nuget\\packages\\r.net.community\\1.7.0\\r.net.community.1.7.0.nupkg.sha512",
+    "C:\\Users\\Tsinana\\.nuget\\packages\\system.security.accesscontrol\\4.5.0\\system.security.accesscontrol.4.5.0.nupkg.sha512",
+    "C:\\Users\\Tsinana\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

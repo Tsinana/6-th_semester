@@ -1,3 +1,5 @@
+require '../classes/super_student'
+
 class StudentShort < SuperStudent
 	attr_reader :id, :fullname, :git, :contact
 

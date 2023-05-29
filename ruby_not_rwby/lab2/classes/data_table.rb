@@ -1,8 +1,7 @@
 class DataTable
-	attr_reader :data
 
 	def initialize(data)
-    @data = data
+    self.data = data
   end
 
   def get_cell(row, col)
@@ -16,4 +15,7 @@ class DataTable
   def num_rows
     self.data.length
   end
+
+    private
+  attr_accessor :data
 end

@@ -1,4 +1,4 @@
-require './classes/super_student'
+require '../classes/super_student'
 
 class Student < SuperStudent
 	attr_validated :id do |val| val =~ ID_REGEX || val.nil? end

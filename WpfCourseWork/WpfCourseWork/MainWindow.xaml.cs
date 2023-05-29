@@ -5,31 +5,25 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 namespace WpfCourseWork {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window {
         static Random rnd = new Random();
         static Program _machine;
+
+
         public string MyData { get; set; }
+
+
         public MainWindow() {
 
             InitializeComponent();
             _machine = new Program();
 
-            //var machine = new Program();
-            //machine.StartMachine();
-
-            //Print_scene(machine.LastGeneration);
-
-            //Print_boxes(Read_parse_file(machine.LastGeneration));
         }
 
         private void Start(string file_name) {
@@ -41,13 +35,15 @@ namespace WpfCourseWork {
             hide_start_menu();
         }
 
-        public void Start(ObservableCollection<Box> list_box,Bin bin) {
+
+        public void Start(ObservableCollection<Box> list_box, Bin bin) {
             List<Box> boxList = list_box.ToList();
             Set_machine_parametrs();
             _machine.StartMachine(boxList, bin);
             Start(_machine.LastGeneration);
             hide_start_menu();
         }
+
 
         public void Set_machine_parametrs() {
             StreamReader reader = new StreamReader("machine_paramentrs.txt");
@@ -56,6 +52,7 @@ namespace WpfCourseWork {
             string[] arr = all_strings.Split(' ');
             _machine.Set_paraments(Convert.ToInt32(arr[0]), Convert.ToDouble(arr[1]), Convert.ToDouble(arr[2]));
         }
+
 
         public void Set_Text(string file_name) {
             StreamReader sr_r = new StreamReader($"C:\\Users\\Tsinana\\GitHub\\6-th_semester\\WpfCourseWork\\WpfCourseWork\\data\\{file_name}\\output_{file_name}.txt");
@@ -68,7 +65,7 @@ namespace WpfCourseWork {
             sr_l.Close();
         }
 
-        private void hide_start_menu() { 
+        private void hide_start_menu() {
             l_shift.Visibility = Visibility.Collapsed;
             l_start.Visibility = Visibility.Collapsed;
             b_new.Visibility = Visibility.Collapsed;
@@ -77,12 +74,14 @@ namespace WpfCourseWork {
             viewport.Visibility = Visibility.Visible;
         }
 
+
         private void Print_scene(string file_name) {
             int[] size_container = Get_size_of_container(file_name);
             Print_container(size_container[0], size_container[1], size_container[2]);
             Print_oXYZ(size_container[0], size_container[1], size_container[2]);
-            viewport.Camera.Position = new Point3D((Convert.ToDouble(size_container[0])/2) + 2, (Convert.ToDouble(size_container[1])/2) + 16, (Convert.ToDouble(size_container[2])/2) + 20);
+            viewport.Camera.Position = new Point3D((Convert.ToDouble(size_container[0]) / 2) + 2, (Convert.ToDouble(size_container[1]) / 2) + 16, (Convert.ToDouble(size_container[2]) / 2) + 20);
         }
+
 
         private static int[] Get_size_of_container(string file_name) {
             StreamReader reader = new StreamReader($"C:\\Users\\Tsinana\\GitHub\\6-th_semester\\WpfCourseWork\\WpfCourseWork\\data\\{file_name}\\input_{file_name}.txt");
@@ -90,6 +89,7 @@ namespace WpfCourseWork {
             reader.Close();
             return Array.ConvertAll(all_strings.Split(' '), int.Parse);
         }
+
 
         private static string[] Read_parse_file(string file_name) {
             StreamReader reader = new StreamReader($"C:\\Users\\Tsinana\\GitHub\\6-th_semester\\WpfCourseWork\\WpfCourseWork\\data\\{file_name}\\outputWpf_{file_name}.txt");
@@ -114,6 +114,7 @@ namespace WpfCourseWork {
                 viewport.Children.Add(box);
             }
         }
+
         private Color Random_color() {
             byte red = Convert.ToByte(rnd.Next(128, 256));
             byte green = Convert.ToByte(rnd.Next(128, 256));

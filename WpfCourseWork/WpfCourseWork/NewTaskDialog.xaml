@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCourseWork"
         mc:Ignorable="d"
-        Title="NewTaskDialog" Height="500" Width="300" FontSize="14">
+        Title="Создание задачи" Height="500" Width="300" FontSize="14">
     
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions><RowDefinition Height="30"></RowDefinition>

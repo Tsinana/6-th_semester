@@ -2,6 +2,7 @@ class DataListStudentShort < data_list
 
 
   def get_names
+    super
     fields = []
     self.instance_variables.each do |var|
       key = var.to_s.delete("@")

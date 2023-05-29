@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:WpfCourseWork"
         mc:Ignorable="d"
-        Title="ProjectSetup" Height="250" Width="800" FontSize="14">
+        Title="Параметры алгоритма" Height="250" Width="800" FontSize="14">
     <Grid  ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>

@@ -1,20 +1,16 @@
-class DataListStudentShort < data_list
+require '../classes/data_list'
+require '../classes/data_table'
 
-
+class DataListStudentShort < DataList
   def get_names
-    super
-    fields = []
-    self.instance_variables.each do |var|
-      key = var.to_s.delete("@")
-      if self.respond_to?(key) || key != 'id'
-        value = self.send(key)
-        fields << "#{key}: #{value}" # важный пробел
-      end
-    end
-    fields
+    %w[fullname git contact]
   end
 
 
   def get_data
+    result = data.map!.with_index do |row, index|
+      row.unshift(index).delete_at(1)
+    end
+    DataTable.new result
   end
 end

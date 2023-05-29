@@ -19,3 +19,4 @@ class DataTable
   private
     attr_accessor :data
 end
+

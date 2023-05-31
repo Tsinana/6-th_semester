@@ -16,6 +16,10 @@ class DataTable
     self.data.length
   end
 
+  def set_data(new_data)
+    self.data = new_data.dup
+  end
+
   private
     attr_accessor :data
 end

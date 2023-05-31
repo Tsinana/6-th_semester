@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "surname": "Епикфан",
+    "first_name": "Игорь",
+    "patronymic": "Всеволодович",
+    "git": "VseDozvoleno",
+    "phone_number": "+79183343258",
+    "telegram": null,
+    "email": null
+  },
+  {
+    "id": 1,
+    "surname": "aaaaaaaa",
+    "first_name": "dddddd",
+    "patronymic": "ffffff",
+    "git": "fadsfffffff",
+    "phone_number": null,
+    "telegram": null,
+    "email": "kefteme@gmail.com"
+  },
+  {
+    "id": 2,
+    "surname": "ehe",
+    "first_name": "hehe",
+    "patronymic": "Whehe",
+    "git": "dfadffsfsdsd",
+    "phone_number": "79183343258",
+    "telegram": null,
+    "email": null
+  }
+]

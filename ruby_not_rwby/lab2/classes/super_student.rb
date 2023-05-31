@@ -1,4 +1,4 @@
-require '../modules/attr_validated'
+require_relative '../modules/attr_validated'
 
 class SuperStudent
 	include AttrValidated 
@@ -10,9 +10,6 @@ class SuperStudent
 	TELEGRAM_REGEX = /^@[\w0-9]+$/
 	GIT_REGEX = /^[\w0-9]+$/
 	EMAIL_REGEX = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-
-
-	@@students = []
 
 
 	# метод формирует массив "поле: значение" которые разрешенны к выводу
@@ -34,6 +31,19 @@ class SuperStudent
 		get_permit_data.join(", ")
 	end
 
+	# метод преобразования объекта в hash
+	def to_hash
+			fields = []
+    self.instance_variables.each do |var|
+      key = var.to_s.delete("@")
+      if self.respond_to?(key)
+        value = self.send(key)
+        fields << key 
+        fields << value
+      end
+    end
+		Hash[fields]
+	end
 
 	# метод вывода титулов объекта в строку с разделителем арг: -separator
 	def get_titles(separator = ';')
@@ -60,7 +70,10 @@ class SuperStudent
 	end
 
 
-		def self.get_students
-		@@students
+	def self.get_students
+		self.students
 	end
+
+	private	
+		@@students = []
 end

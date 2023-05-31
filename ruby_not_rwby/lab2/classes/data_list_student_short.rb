@@ -1,16 +1,12 @@
-require '../classes/data_list'
-require '../classes/data_table'
+require_relative '../classes/data_table'
+require_relative '../classes/data_list'
 
 class DataListStudentShort < DataList
   def get_names
     %w[fullname git contact]
   end
 
-
-  def get_data
-    result = data.map!.with_index do |row, index|
-      row.unshift(index).delete_at(1)
-    end
-    DataTable.new result
+  def get_info(obj)
+    [obj.fullname, obj.git, obj.contact]
   end
 end

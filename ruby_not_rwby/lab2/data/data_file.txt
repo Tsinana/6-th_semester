@@ -1,4 +1,4 @@
 id;surname;name;patronymic;telegram;email;git;phone
-1;lupov;lupa;lupovich;;;;
+1;lupov;lupa;lupovich;@lupa;;lupaProgramer;
 2;pupov;pupa;pupovich;@pupa;pupa@mail.ru;pupaProgramer;+79002112332
-3;Ivanov;Ivan;Ivanich;;;;
+3;Ivanov;Ivan;Ivanich;@pupa;;III;

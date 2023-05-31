@@ -1,4 +1,4 @@
-require '../classes/super_student'
+require_relative '../classes/super_student'
 
 class Student < SuperStudent
 	attr_validated :id do |val| val =~ ID_REGEX || val.nil? end
@@ -29,7 +29,6 @@ class Student < SuperStudent
 		self.telegram = telegram
 	end
 
-
 # метод, который возвращает краткую информацию о студенте – Фамилия и Инициалы; гит, связь в ОДНОЙ строке
 	def get_info
 		self.validate
@@ -38,13 +37,16 @@ class Student < SuperStudent
 		person += "\t#{self.get_contact}"
 	end
 
+
 	def get_contact
 		"#{[self.phone, self.email, self.telegram].find(&:itself)}"
 	end
 
+
 	def get_fullname
 		"#{self.surname} #{self.name[0]} #{self.patronymic[0]}"
 	end
+
 
 	def get_full_git
 		"https://github.com/#{self.git}"
@@ -60,7 +62,7 @@ class Student < SuperStudent
 				values = line.split(separator)
 				values[-1] = values[-1].chop
 				(keys.length).times do |i|
-					values[i] = nil if values[i].length == 0
+					values[i] = nil if values[i].nil? or values[i].length == 0
 					params[keys[i].to_sym] = values[i]
 				end
 				new(**params)
@@ -69,28 +71,28 @@ class Student < SuperStudent
 	end
 
 
-def self.write_to_txt(path,separator = ';')
-	File.open(path,'w') do |file|
-		file.puts @@students[0].get_titles(separator)
-		@@students.each do |student|
-			file.puts student.get_data(separator)
+	def self.write_to_txt(path,separator = ';')
+		File.open(path,'w') do |file|
+			file.puts @@students[0].get_titles(separator)
+			@@students.each do |student|
+				file.puts student.get_data(separator)
+			end
 		end
 	end
-end
-
 
 	private
 	
-
 	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи
 	def validate
 		validate_git
 		validate_contact_info
 	end
 
+
 	def validate_git
 		raise "Git не установлен" if :git == nil
 	end
+
 
 	def validate_contact_info
 		contact_info = [:phone, :email, :telegram]

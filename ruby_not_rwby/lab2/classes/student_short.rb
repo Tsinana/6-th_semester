@@ -1,4 +1,4 @@
-require '../classes/super_student'
+require_relative '../classes/super_student'
 
 class StudentShort < SuperStudent
 	attr_reader :id, :fullname, :git, :contact
@@ -9,7 +9,7 @@ class StudentShort < SuperStudent
 		@fullname = contacts[0]
 		@git = contacts[1]
 		@contact = contacts[2]
-		@@students << self
+		self.students << self
 	end
 
 

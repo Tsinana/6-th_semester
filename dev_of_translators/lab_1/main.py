@@ -1,6 +1,6 @@
-from components.converter import Converter
+
 from components.infix import infix
-from components.lab_4 import lab4
+
 from components.postfix import OPZ
 from components.store_dictrs import store_dicts
 import re

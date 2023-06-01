@@ -2,6 +2,7 @@ require_relative '../classes/super_student_list'
 
 class StudentListJson < SuperStudentList
 
+
   def list_hash_from_str(str)
   	list_of_hash = []
   	arr_str = str.split("\n")
@@ -19,6 +20,7 @@ class StudentListJson < SuperStudentList
 		end
 		list_of_hash
   end
+
 
   def list_hash_to_str(list_hash)
   	ans_str = ''

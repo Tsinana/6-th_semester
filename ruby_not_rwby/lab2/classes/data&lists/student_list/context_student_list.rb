@@ -1,11 +1,15 @@
-require_relative '../student/student'
-require_relative 'students_list_JSON'
+require_relative '../../student/student'
+require_relative '../data_list_student_short'
 
 class ContextStudentList
-	attr_accessor :strategy, :studentsList, :list_of_students
 	def initialize(strategy)
 		self.list_of_students = []
     self.strategy = strategy
+  end
+
+	# Метод. Установка новой стратегии
+  def set_strategy(strategy)
+  	self.strategy = strategy
   end
 
 	# Метод. Чтение из файла
@@ -22,7 +26,7 @@ class ContextStudentList
   def write_to_file(path)
   	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
 		 File.open(path,'w') do |file|
-			file.puts strategy.list_hash_to_str(list_of_students.map {&:to_hash})
+			file.puts strategy.list_hash_to_str(list_of_students.map &:to_hash)
 		end
   end
 
@@ -63,4 +67,7 @@ class ContextStudentList
 	def get_student_count
     list_of_students.size
   end
+
+	private
+  	attr_accessor :strategy, :list_of_students
 end

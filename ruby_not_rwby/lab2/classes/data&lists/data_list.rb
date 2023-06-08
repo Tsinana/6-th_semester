@@ -4,27 +4,25 @@ class DataList
     self.selected = []
   end
 
-
-# Найти объект по индексу
+  # Метод. Ищет объект по индексу
   def select(number)
     self.selected << number
   end
 
-
+  # Метод. Возвращает массив выбраных записей
   def get_selected
     selected.reduce [] do |id_array, index| id_array << data[index].id end 
   end
 
-
+  # Метод. Устанавливает полностью новые данные 
   def set_data(new_data)
     self.data = new_data.dup
   end
 
-
   protected
   def get_names; end
 
-
+  # Шаблонный метод.
   def get_data
     ans_array = []
     data.map.with_index do |obj, index|
@@ -34,9 +32,7 @@ class DataList
     DataTable.new ans_array
   end
 
-
   def get_info(obj); end
-
 
   private
     attr_accessor :data, :selected

@@ -1,8 +1,7 @@
-require_relative '../modules/attr_validated'
+require_relative '../../modules/attr_validated'
 
 class SuperStudent
 	include AttrValidated 
-
 
 	ID_REGEX = /^[0-9]+$/
 	PHONE_REGEX = /^[(\+7)8][0-9]+$/
@@ -10,7 +9,6 @@ class SuperStudent
 	TELEGRAM_REGEX = /^@[\w0-9]+$/
 	GIT_REGEX = /^[\w0-9]+$/
 	EMAIL_REGEX = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-
 
 	# метод формирует массив "поле: значение" которые разрешенны к выводу
 	def get_permit_data
@@ -24,7 +22,6 @@ class SuperStudent
   	end
   	fields
 	end
-
 
 	# метод преобразования объекта в строку
 	def to_s
@@ -50,12 +47,10 @@ class SuperStudent
 		get_permit_data.map{|val| val.split(":").first}.join("#{separator}")
 	end
 
-
 	# метод преобразования данных объекта в строку с разделителем арг: -separator 
 	def get_data(separator = ";")
 		get_permit_data.map{|val| val.split(":").last.strip}.join("#{separator}")
 	end
-
 
 	# метод преобразования строки в объект. Строка формата to_s
 	def self.string_to_obj(str)
@@ -68,12 +63,4 @@ class SuperStudent
  		end
 	  self.new(**params)
 	end
-
-
-	def self.get_students
-		self.students
-	end
-
-	private	
-		@@students = []
 end

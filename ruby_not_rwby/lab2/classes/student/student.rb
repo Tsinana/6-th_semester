@@ -1,4 +1,4 @@
-require_relative '../classes/super_student'
+require_relative './super_student'
 
 class Student < SuperStudent
 	attr_validated :id do |val| val =~ ID_REGEX || val.nil? end
@@ -18,9 +18,7 @@ class Student < SuperStudent
 		self.email = email 
 		self.git = git
 		self.phone = phone
-		@@students << self
 	end
-
 
 	# метод, который устанавливает значения поля или полей для введенных контактов.
 	def set_contacts(email: self.email, phone: self.phone, telegram: self.telegram)
@@ -29,7 +27,7 @@ class Student < SuperStudent
 		self.telegram = telegram
 	end
 
-# метод, который возвращает краткую информацию о студенте – Фамилия и Инициалы; гит, связь в ОДНОЙ строке
+	# метод, который возвращает краткую информацию о студенте – Фамилия и Инициалы; гит, связь в ОДНОЙ строке
 	def get_info
 		self.validate
 		person = "#{self.get_fullname}"
@@ -37,63 +35,62 @@ class Student < SuperStudent
 		person += "\t#{self.get_contact}"
 	end
 
-
+	# метод, который возвращает любой существующий один контакт
 	def get_contact
 		"#{[self.phone, self.email, self.telegram].find(&:itself)}"
 	end
 
-
+	# метод, который возвращает полное имя студента вормата Фамилия И О
 	def get_fullname
 		"#{self.surname} #{self.name[0]} #{self.patronymic[0]}"
 	end
 
-
+	# метод, который возвращает ссылку на гит студента
 	def get_full_git
 		"https://github.com/#{self.git}"
 	end
 
+	# def self.read_from_txt(path,separator = ';')
+	# 	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
+	# 	File.open(path) do |file|
+	# 		keys = file.first.chop.split(separator)
+	# 		file.each do |line|
+	# 			params = {}
+	# 			values = line.split(separator)
+	# 			values[-1] = values[-1].chop
+	# 			(keys.length).times do |i|
+	# 				values[i] = nil if values[i].nil? or values[i].length == 0
+	# 				params[keys[i].to_sym] = values[i]
+	# 			end
+	# 			new(**params)
+	# 		end
+	# 	end
+	# end
 
-	def self.read_from_txt(path,separator = ';')
-		raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
-		File.open(path) do |file|
-			keys = file.first.chop.split(separator)
-			file.each do |line|
-				params = {}
-				values = line.split(separator)
-				values[-1] = values[-1].chop
-				(keys.length).times do |i|
-					values[i] = nil if values[i].nil? or values[i].length == 0
-					params[keys[i].to_sym] = values[i]
-				end
-				new(**params)
-			end
-		end
-	end
 
-
-	def self.write_to_txt(path,separator = ';')
-		File.open(path,'w') do |file|
-			file.puts @@students[0].get_titles(separator)
-			@@students.each do |student|
-				file.puts student.get_data(separator)
-			end
-		end
-	end
+	# def self.write_to_txt(path,separator = ';')
+	# 	File.open(path,'w') do |file|
+	# 		file.puts @@students[0].get_titles(separator)
+	# 		@@students.each do |student|
+	# 			file.puts student.get_data(separator)
+	# 		end
+	# 	end
+	# end
 
 	private
 	
-	# метод, который проводит две валидации наличие гита и наличие любого контакта для связи
+	# метод, который проводит две валидации: наличие гита и наличие любого контакта для связи
 	def validate
 		validate_git
 		validate_contact_info
 	end
 
-
+	# метод, который проводит валидацию на гит
 	def validate_git
 		raise "Git не установлен" if :git == nil
 	end
 
-
+# метод, который проводит валидацию на контакты студента
 	def validate_contact_info
 		contact_info = [:phone, :email, :telegram]
 		raise "Нет контактной информации" unless contact_info.any? { |info| !send(info).nil? }

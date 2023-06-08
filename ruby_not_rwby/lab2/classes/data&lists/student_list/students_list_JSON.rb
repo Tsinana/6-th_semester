@@ -1,8 +1,7 @@
-require_relative '../classes/super_student_list'
+require_relative 'super_student_list'
 require 'json'
 
 class StudentListJson < SuperStudentList
-
   def list_hash_from_str(str)
     JSON.parse(str,  {symbolize_names: true })
   end

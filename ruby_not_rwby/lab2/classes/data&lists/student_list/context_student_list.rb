@@ -1,5 +1,5 @@
-require_relative '../classes/student'
-require_relative '../classes/students_list_JSON'
+require_relative '../student/student'
+require_relative 'students_list_JSON'
 
 class ContextStudentList
 	attr_accessor :strategy, :studentsList, :list_of_students
@@ -8,7 +8,7 @@ class ContextStudentList
     self.strategy = strategy
   end
 
-
+	# Метод. Чтение из файла
   def read_from_file(path)
   	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
   	File.open(path) do |file|
@@ -18,7 +18,7 @@ class ContextStudentList
   	end
   end
 
-
+	# Метод. Запись на файл
   def write_to_file(path)
   	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
 		 File.open(path,'w') do |file|
@@ -26,38 +26,40 @@ class ContextStudentList
 		end
   end
 
-
+	# Метод. Возращает k по счету n элементов формата Datalist
   def get_k_n_sudent_short_list(k, n, data_list_obj = nil)
   	return data_list_obj unless data_list_obj.nil?
-		DataListStudentShort.new(list_of_students.slice(n-1, k).map!{ |e| StudentShort.new(e) })
+		DataListStudentShort.new(list_of_students.slice((k-1) * n, n).map!{ |e| StudentShort.new(e) })
 	end
 
-
+	# Метод. Сортирует по полному имени  
 	def sort_by_fullname
 		 list_of_students.sort_by(&:surname)
 	end
 
+	# Метод. Возвращает студента по id
 	def get_student_by_id(id)
     list_of_students.find {|student| st.id==id}
   end
 
-
+	# Метод. Добавляет студента
 	def add_student(student)
 		student.id = get_new_student_id
     list_of_students << student
 	end
 
-
+	# Метод. Заменяет студента указанного по id
 	def replace_student_by_ID(student, student_id)
     id_student = list_of_students.find_index{|student| student.id == st_id}
     list_of_students[id_student] = student
 	end
 
+	# Метод. Удаляет студента указанного по id
 	def delete_student_by_ID(student_id)
     list_of_students.delete_if {|student| student.id == student_id}
 	end
 
-
+	# Метод. Возвращает количество записей 
 	def get_student_count
     list_of_students.size
   end

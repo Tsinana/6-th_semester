@@ -1,5 +1,5 @@
-require_relative '../classes/data_table'
-require_relative '../classes/data_list'
+require_relative 'data_table'
+require_relative 'data_list'
 
 class DataListStudentShort < DataList
   def get_names

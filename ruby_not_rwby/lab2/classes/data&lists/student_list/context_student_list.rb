@@ -25,8 +25,8 @@ class ContextStudentList
 	# Метод. Запись на файл
   def write_to_file(path)
   	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
-		 File.open(path,'w') do |file|
-			file.puts strategy.list_hash_to_str(list_of_students.map &:to_hash)
+		File.open(path,'w') do |file|
+		file.puts strategy.list_hash_to_str(list_of_students.map &:to_hash)
 		end
   end
 

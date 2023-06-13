@@ -1,18 +1,11 @@
-require_relative 'students_list_JSON'
+require_relative '../../student/student'
+require_relative '../../student/student_short'
+require_relative '../db_working'
 require 'sqlite3'
 
 class StudentListDB
-	@instance = new
-
-	private_class_method :new
-
-	def self.instance
-		@instance
-	end
-
 	def initialize()
-		self.db = SQLite3::Database.open '../../../data/students.db'
-		self.db.results_as_hash = true
+		self.db = DBWorking.new
 	end
 
 	# Метод. Возращает k по счету n элементов формата Datalist
@@ -47,9 +40,9 @@ class StudentListDB
 
 	# Метод. Возвращает количество записей 
   def student_count
-    db.results_as_hash=false
-    res=db.execute("Select COUNT(*) from student").first[0]
-    db.results_as_hash=true
+    self.db.results_as_hash=false
+    res = self.db.execute("Select COUNT(*) from student").first[0]
+    self.db.results_as_hash=true
     res
   end
 
@@ -62,3 +55,5 @@ class StudentListDB
     [student.surname, student.name,  student.patronymic, student.phone, student.telegram, student.email, student.git]
   end
 end
+
+a = StudentListDB.new

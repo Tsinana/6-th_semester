@@ -1,9 +1,9 @@
-require_relative '../../student/student'
-require_relative '../../student/student_short'
+require_relative '../data_list_student_short'
 require_relative '../db_working'
+require_relative 'students_list'
 require 'sqlite3'
 
-class StudentListDB
+class StudentListDB < StudentList
 	def initialize()
 		self.db = DBWorking.new
 	end
@@ -24,18 +24,18 @@ class StudentListDB
 	end
 
 	# Метод. Добавляет студента
-	def add_student(student)
-		db.execute('insert into student (surname, name, patronymic, phone, telegram, email, git) VALUES (?, ?, ?, ?, ?, ?, ?)', *student_fields(student))
+	def add_student(obj_student)
+		db.execute('insert into student (surname, name, patronymic, phone, telegram, email, git) VALUES (?, ?, ?, ?, ?, ?, ?)', *student_fields(obj_student))
 	end
 
 	# Метод. Удаляет студента указанного по id
-	def remove_student(student_id)
+	def delete_student(student_id)
 	  db.execute('DELETE FROM student WHERE id = ?', student_id)
 	end
 
 	# Метод. Заменяет студента указанного по id
-	def replace_student(student_id, student)
-	  db.execute('UPDATE student SET first_name=?, last_name=?, second_name=?, phone=?, telegram=?, mail=?, git=? WHERE id=?',*student_fields(student), student_id)
+	def replace_student(obj_student, student_id)
+	  db.execute('UPDATE student SET first_name=?, last_name=?, second_name=?, phone=?, telegram=?, mail=?, git=? WHERE id=?',*student_fields(obj_student), student_id)
 	end
 
 	# Метод. Возвращает количество записей 
@@ -45,14 +45,14 @@ class StudentListDB
     self.db.results_as_hash=true
     res
   end
-
+ 
   private
 
   attr_accessor :db
 
 	# Метод. Возвращает поля студента массивом
-  def student_fields(student)
-    [student.surname, student.name,  student.patronymic, student.phone, student.telegram, student.email, student.git]
+  def student_fields(obj_student)
+    [obj_student.surname, obj_student.name,  obj_student.patronymic, obj_student.phone, obj_student.telegram, obj_student.email, obj_student.git]
   end
 end
 

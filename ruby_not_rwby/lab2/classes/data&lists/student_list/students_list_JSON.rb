@@ -1,4 +1,4 @@
-require_relative 'super_student_list'
+require_relative 'student_list_file_strategy'
 require 'json'
 
 class StudentListJson < SuperStudentList
@@ -9,4 +9,4 @@ class StudentListJson < SuperStudentList
   def list_hash_to_str(list_hash)
     JSON.generate(list_hash)
   end
- end
+ end\

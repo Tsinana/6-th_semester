@@ -1,7 +1,7 @@
 require_relative '../../student/student'
 require_relative '../data_list_student_short'
 
-class ContextStudentList
+class StudentListFile
 	def initialize(strategy)
 		self.list_of_students = []
     self.strategy = strategy

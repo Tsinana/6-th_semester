@@ -1,4 +1,4 @@
-require_relative '../classes/super_student_list'
+require_relative 'student_list_file_strategy'
 
 class StudentListJson < SuperStudentList
 

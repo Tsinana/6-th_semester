@@ -5,10 +5,8 @@ class DBWorking
 	include MySingleton
 
 	def initialize()
-		puts "DB1"
 		@db = SQLite3::Database.open '../../../data/students.db'
 		@db.results_as_hash = true
-		puts "DB2"
 	end
 
 	def execute(query, *args)

@@ -1,7 +1,7 @@
-require_relative 'student_list_file_strategy'
+require_relative 'students_list_file_strategy'
 require 'yaml'
 
-class StudentListYaml < SuperStudentList
+class StudentListYaml < StudentListFileStrategy
   def list_hash_from_str(str)
     YAML.load(str).map {|hash| hash.transform_keys(&:to_sym)}
   end

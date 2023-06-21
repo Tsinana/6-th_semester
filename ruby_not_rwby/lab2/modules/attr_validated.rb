@@ -8,7 +8,6 @@ module AttrValidated
       args.each_with_index do |name, index|
         define_method("#{name}=") do |value|
           if block_given? && index == 0
-            puts (validator.to_s)
             raise ArgumentError, "Value '#{value}' is invalid" unless validator.call(value)
           end
 

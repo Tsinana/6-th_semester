@@ -1,0 +1,25 @@
+---
+- id: 0
+  surname: Rupasov
+  name: Gleb
+  patronymic: Alexsandrovich
+  telegram:
+  email:
+  git: VseDozvoleno
+  phone: "+79183343258"
+- id: 1
+  surname: aaaaaaaa
+  name: dddddd
+  patronymic: ffffff
+  telegram:
+  email: kefteme@gmail.com
+  git: fadsfffffff
+  phone:
+- id: 2
+  surname: ehe
+  name: hehe
+  patronymic: Whehe
+  telegram:
+  email:
+  git: dfadffsfsdsd
+  phone: "+79183343258"

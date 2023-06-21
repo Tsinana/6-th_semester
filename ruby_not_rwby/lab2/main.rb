@@ -6,8 +6,9 @@ begin
 
   a = Hash["a", 100, "b", 200].to_s
   b = a.scan(/[a-z]+|\d+/).delete_if.with_index { |_, i| not i.even? }
-  puts b
-
+  arr = [1,1,1,1,2,2,2,2]
+  counts = arr.group_by(&:itself).map { |k, v| [v.count] if v.count != 4}.compact
+  puts counts.to_s
 
 
   # student_sh = students

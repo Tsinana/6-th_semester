@@ -1,7 +1,7 @@
 require_relative './super_student'
 
 class Student < SuperStudent
-	attr_validated :id do |val| val =~ ID_REGEX || val.nil? end
+	attr_validated :id do |val| val.to_s =~ ID_REGEX || val.nil? end
 	attr_validated :surname, :name, :patronymic  do |val| val =~ FULL_NAME_REGEX || val.nil? end
 	attr_validated :telegram do |val| val =~ TELEGRAM_REGEX || val.nil? end
 	attr_validated :email do |val| val =~ EMAIL_REGEX || val.nil? end
@@ -9,7 +9,7 @@ class Student < SuperStudent
 	attr_validated :phone do |val| val =~ PHONE_REGEX || val.nil? end
 
 
-	def initialize(id: , surname: , name: , patronymic: ,phone: nil, telegram: nil, email: nil, git: nil)
+	def initialize(id:, surname:, name:, patronymic:, phone: nil, telegram: nil, email: nil, git: nil)
 		self.id = id 
 		self.surname = surname
 		self.name = name 

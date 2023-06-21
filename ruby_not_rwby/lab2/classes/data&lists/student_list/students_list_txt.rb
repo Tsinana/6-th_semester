@@ -1,6 +1,6 @@
-require_relative 'student_list_file_strategy'
+require_relative 'students_list_file_strategy'
 
-class StudentListJson < SuperStudentList
+class StudentListTxt < StudentListFileStrategy
 
 
   def list_hash_from_str(str)

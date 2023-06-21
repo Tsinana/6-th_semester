@@ -17,14 +17,13 @@ class StudentListFile
   	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
   	File.open(path) do |file|
   		strategy.list_hash_from_str(file.read).each do |hash_student|
-  			self.list_of_students << Student.new() 
+  			self.list_of_students << Student.new(**hash_student) 
   		end
   	end
   end
 
 	# Метод. Запись на файл
   def write_to_file(path)
-  	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
 		File.open(path,'w') do |file|
 		file.puts strategy.list_hash_to_str(list_of_students.map &:to_hash)
 		end
@@ -48,8 +47,8 @@ class StudentListFile
 
 	# Метод. Добавляет студента
 	def add_student(student)
-		student.id = get_new_student_id
-    list_of_students << student
+		student.id = 0
+    	list_of_students << student
 	end
 
 	# Метод. Заменяет студента указанного по id

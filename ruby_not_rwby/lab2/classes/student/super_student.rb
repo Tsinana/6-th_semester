@@ -39,7 +39,7 @@ class SuperStudent
         fields << value
       end
     end
-		Hash[fields]
+		Hash[*fields]
 	end
 
 	# метод вывода титулов объекта в строку с разделителем арг: -separator

@@ -17,5 +17,3 @@ class DBWorking
     @db.results_as_hash = bool
   end
 end
-
-puts DBWorking.ancestors

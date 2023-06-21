@@ -1,4 +1,6 @@
 require_relative '../data_list_student_short'
+require_relative '../../student/student'
+require_relative '../../student/student_short'
 require_relative '../db_working'
 require_relative 'students_list'
 require 'sqlite3'
@@ -27,7 +29,7 @@ class StudentListDB < StudentList
 	def add_student(obj_student)
 		db.execute('insert into student (surname, name, patronymic, phone, telegram, email, git) VALUES (?, ?, ?, ?, ?, ?, ?)', *student_fields(obj_student))
 	end
-
+	
 	# Метод. Удаляет студента указанного по id
 	def delete_student(student_id)
 	  db.execute('DELETE FROM student WHERE id = ?', student_id)

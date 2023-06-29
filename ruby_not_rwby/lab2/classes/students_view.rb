@@ -1,9 +1,9 @@
-
+require_relative 'students_list_controler'
 require 'fox16'
 
 include Fox
 
-class MyWindow < FXMainWindow
+class Students_view < FXMainWindow
   def initialize(app)
     super(app, "My App", nil, nil, DECOR_ALL, 0, 0, 1024, 512)
 
@@ -11,8 +11,23 @@ class MyWindow < FXMainWindow
     @cur_page = 0
     @all_pages = 0
 
+# Switcher
+    @tabbook = FXTabBook.new(self,:opts => LAYOUT_FILL_X|LAYOUT_FILL_Y|LAYOUT_RIGHT)
+  
+    # First item is a list
+    @tab1 = FXTabItem.new(@tabbook, "&Simple List", nil)
+    tableframe = FXVerticalFrame.new(@tabbook, FRAME_THICK|FRAME_RAISED)
+      
+    # Second item is a file list
+    @tab2 = FXTabItem.new(@tabbook, "F&ile List", nil)
+    @fileframe = FXVerticalFrame.new(@tabbook, FRAME_THICK|FRAME_RAISED)
+    
+    # Third item is a directory list
+    @tab3 = FXTabItem.new(@tabbook, "T&ree List", nil)
+    dirframe = FXVerticalFrame.new(@tabbook, FRAME_THICK|FRAME_RAISED)
+
     # header
-    header_frame = FXHorizontalFrame.new(self, FRAME_THICK|LAYOUT_FILL_X|LAYOUT_TOP)
+    header_frame = FXHorizontalFrame.new(tableframe, FRAME_THICK|LAYOUT_FILL_X|LAYOUT_TOP)
     @b_refresh = FXButton.new(header_frame,
       "Refresh",
       :opts => FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,
@@ -39,7 +54,7 @@ class MyWindow < FXMainWindow
     @b_add.enabled = false
 
     # footer
-    footer = FXHorizontalFrame.new(self, FRAME_THICK|LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
+    footer = FXHorizontalFrame.new(tableframe, FRAME_THICK|LAYOUT_FILL_X|LAYOUT_BOTTOM)
     FXLabel.new(footer, "Page #{@cur_page} of #{@all_pages}    ")
     FXLabel.new(footer, "#{@t_items} items    ")
 
@@ -55,7 +70,7 @@ class MyWindow < FXMainWindow
 
 
     # nav & main
-    section_frame = FXHorizontalFrame.new(self, LAYOUT_TOP|LAYOUT_FILL)
+    section_frame = FXHorizontalFrame.new(tableframe, LAYOUT_TOP|LAYOUT_FILL)
 
 
 
@@ -149,18 +164,7 @@ class MyWindow < FXMainWindow
 
     @table = FXTable.new(main_frame, :opts => LAYOUT_FILL|TABLE_NO_ROWSELECT)
     @table.editable = false
-
-    @table.setTableSize(6, 4)#6 cnhjr &&&
-
-    @table.setColumnText(0, "ID")
-    @table.setColumnText(1, "Full name")
-    @table.setColumnText(2, "Git")
-    @table.setColumnText(3, "Contact")
-
-    item = FXTableItem.new("Hello, world!")
-    @table.setItem(2, 0, item)
-
-
+    
     selected_items = []
     @table.connect(SEL_SELECTED) do |sender, sel, pos|
       item = [pos.row, pos.col]
@@ -185,36 +189,54 @@ class MyWindow < FXMainWindow
       @b_edit.enabled = false
       @b_delete.enabled = false
       @b_add.enabled = false
-    end
-
-    def inOneRow (arr_rows_cols)
-      row = arr_rows_cols[0][0]
-      arr_rows_cols.each do |el|
-        return false if row != el[0]
-      end
-      true
-    end
-
-    def inRows (arr_rows_cols)
-      arr = []
-      arr_rows_cols.each do |el|
-        arr << el[0]
-      end
-      counts = arr.group_by(&:itself).map { |k, v| [v.count] if v.count != 4}.compact
-      counts.empty?()
-    end
-    # table.connect(SEL_COMMAND) do |sender, sel, data|
-    #   puts "anchor row, col = #{sender.anchorRow}, #{sender.anchorColumn}"
-    # end
   end
+
+  def set_controller(controller)
+    self.controller = controller
+  end
+  def get_controller
+    self.controller
+  end
+
+  def set_table_params(column_names, whole_entities_count)
+    column_names.each_with_index do |name, index|
+      @table.setColumnText(index, name)
+    end
+  end
+
+  def set_table_data(data_table)
+    @table.setTableSize(data_table.num_rows, data_table.num_columns)
+    p data_table.num_columns
+    data_table.num_columns.times do |i|
+      data_table.num_rows.times do |j|
+        item = FXTableItem.new(data_table.get_cell(j,i).to_s)
+        @table.setItem(j,i, item)
+      end
+    end
+  end
+
+  def inOneRow (arr_rows_cols)
+    row = arr_rows_cols[0][0]
+    arr_rows_cols.each do |el|
+      return false if row != el[0]
+    end
+    true
+  end
+
+  def inRows (arr_rows_cols)
+    arr = []
+    arr_rows_cols.each do |el|
+      arr << el[0]
+    end
+    counts = arr.group_by(&:itself).map { |k, v| [v.count] if v.count != 4}.compact
+    counts.empty?()
+    end
+  end
+
+  def create 
+    super
+    show(PLACEMENT_SCREEN) 
+  end
+  private
+    attr_accessor :controller
 end
-
-
-# Create application
-app = FXApp.new
-window = MyWindow.new(app)
-
-# Show window and start event loop
-app.create
-window.show(PLACEMENT_SCREEN)
-app.run

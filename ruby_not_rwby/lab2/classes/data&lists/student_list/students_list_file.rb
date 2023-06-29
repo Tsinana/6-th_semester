@@ -1,10 +1,12 @@
 require_relative '../../student/student'
+require_relative '../../student/student_short'
 require_relative '../data_list_student_short'
+require_relative './students_list_json'
 
 class StudentListFile
 	def initialize(strategy)
 		self.list_of_students = []
-    self.strategy = strategy
+    	self.strategy = strategy
   end
 
 	# Метод. Установка новой стратегии
@@ -25,24 +27,25 @@ class StudentListFile
 	# Метод. Запись на файл
   def write_to_file(path)
 		File.open(path,'w') do |file|
-		file.puts strategy.list_hash_to_str(list_of_students.map &:to_hash)
+			file.puts strategy.list_hash_to_str(list_of_students.map &:to_hash)
 		end
   end
 
 	# Метод. Возращает k по счету n элементов формата Datalist
-  def get_k_n_sudent_short_list(k, n, data_list_obj = nil)
+  def get_k_n_student_short_list(k, n, data_list_obj = nil)
   	return data_list_obj unless data_list_obj.nil?
-		DataListStudentShort.new(list_of_students.slice((k-1) * n, n).map!{ |e| StudentShort.new(e) })
+  		list = list_of_students.slice((k-1) * n, n).map{|student| StudentShort.student_init(Student.new(**(student.to_hash.transform_keys(&:to_sym))))}
+		DataListStudentShort.new(list)
 	end
 
-	# Метод. Сортирует по полному имени  
+	# Метод. Сортирует по полному имени
 	def sort_by_fullname
 		 list_of_students.sort_by(&:surname)
 	end
 
 	# Метод. Возвращает студента по id
 	def get_student_by_id(id)
-    list_of_students.find {|student| st.id==id}
+    list_of_students.find {|student| student.id==id}
   end
 
 	# Метод. Добавляет студента

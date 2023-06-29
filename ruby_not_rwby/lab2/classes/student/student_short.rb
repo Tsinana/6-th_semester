@@ -17,5 +17,5 @@ class StudentShort < SuperStudent
 	end
 
 	private
-		attr_accessor :id, :fullname, :git, :contact
+		attr_writer :id, :fullname, :git, :contact
 end

@@ -14,7 +14,7 @@ class StudentListDB < StudentList
 	def get_k_n_student_short_list(elements_per_page, page_number)
 		raise "Некорректно выбран объем данных" if elements_per_page < 1 and page_number < 1
 		students = db.execute('SELECT * FROM student LIMIT ? OFFSET ?',elements_per_page,elements_per_page * (page_number - 1))
-	  	slice = students.map{|student| StudentShort.student_init(Student.new(**student.transform_keys(&:to_sym)))}
+	  	slice = students.map{|student| StudentShort.student_init(Student.new(**(student.to_hash.transform_keys(&:to_sym))))}
 	  	DataListStudentShort.new(slice)
 	  end
 
@@ -58,4 +58,3 @@ class StudentListDB < StudentList
   end
 end
 
-a = StudentListDB.new

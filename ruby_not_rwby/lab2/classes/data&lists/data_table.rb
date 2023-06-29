@@ -8,12 +8,14 @@ class DataTable
     self.data[row][col]
   end
 
-  # Метод. Возвращает столбик
+  # Метод. Возвращает количество столбцов
   def num_columns
+    if !self.data[0].nil?
     self.data[0].length
+    end
   end
 
-  # Метод. Возвращает строку
+  # Метод. Возвращает количество строк
   def num_rows
     self.data.length
   end
@@ -26,4 +28,3 @@ class DataTable
   private
     attr_accessor :data
 end
-

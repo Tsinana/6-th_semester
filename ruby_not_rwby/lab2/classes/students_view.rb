@@ -7,11 +7,11 @@ class Students_view < FXMainWindow
   def initialize(app)
     super(app, "My App", nil, nil, DECOR_ALL, 0, 0, 1024, 512)
 
-    @t_items = 0
+    @t_items = FXDataTarget.new(10)
     @cur_page = 0
     @all_pages = 0
 
-# Switcher
+    # Switcher
     @tabbook = FXTabBook.new(self,:opts => LAYOUT_FILL_X|LAYOUT_FILL_Y|LAYOUT_RIGHT)
   
     # First item is a list
@@ -55,8 +55,12 @@ class Students_view < FXMainWindow
 
     # footer
     footer = FXHorizontalFrame.new(tableframe, FRAME_THICK|LAYOUT_FILL_X|LAYOUT_BOTTOM)
-    FXLabel.new(footer, "Page #{@cur_page} of #{@all_pages}    ")
-    FXLabel.new(footer, "#{@t_items} items    ")
+    FXLabel.new(footer, "Page #{@cur_page} of #{@all_pages}    ",nil,
+      LAYOUT_CENTER_Y)
+    FXSpinner.new(footer, 2, @t_items, FXDataTarget::ID_VALUE,
+      SPIN_CYCLIC|FRAME_SUNKEN|FRAME_THICK|LAYOUT_CENTER_Y|LAYOUT_FILL_ROW)
+    FXLabel.new(footer, " items    ", nil,
+      LAYOUT_CENTER_Y)
 
     ar_frame = FXHorizontalFrame.new(footer, LAYOUT_CENTER_X)
     ar_frame.padRight = 136
@@ -184,6 +188,12 @@ class Students_view < FXMainWindow
       end
     end
 
+    @tabbook.connect(SEL_COMMAND) do |sender, sel, item|
+      if item == 0
+        self.controller.refresh_data
+      end
+    end
+
     @table.connect(SEL_DESELECTED) do |sender, sel, pos|
       selected_items.delete([pos.row, pos.col])
       @b_edit.enabled = false
@@ -206,13 +216,13 @@ class Students_view < FXMainWindow
 
   def set_table_data(data_table)
     @table.setTableSize(data_table.num_rows, data_table.num_columns)
-    p data_table.num_columns
     data_table.num_columns.times do |i|
       data_table.num_rows.times do |j|
         item = FXTableItem.new(data_table.get_cell(j,i).to_s)
         @table.setItem(j,i, item)
       end
     end
+
   end
 
   def inOneRow (arr_rows_cols)

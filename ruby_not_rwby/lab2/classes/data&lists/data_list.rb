@@ -19,7 +19,10 @@ class DataList
   # Метод. Устанавливает полностью новые данные 
   def set_data(new_data)
     self.data = new_data.dup
-        p new_data
+  end
+
+  def get_list_objs
+    data
   end
 
   protected

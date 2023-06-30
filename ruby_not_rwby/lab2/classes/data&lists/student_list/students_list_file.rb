@@ -16,6 +16,7 @@ class StudentListFile
 
 	# Метод. Чтение из файла
   def read_from_file(path)
+  	self.list_of_students = []
   	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
   	File.open(path) do |file|
   		strategy.list_hash_from_str(file.read).each do |hash_student|

@@ -10,6 +10,10 @@ class DataListStudentShort < DataList
     %w[number fullname git contact]
   end
 
+  def get_data
+    super
+  end
+
   def get_info(obj)
     [obj.fullname, obj.git, obj.contact]
   end
@@ -25,6 +29,7 @@ class DataListStudentShort < DataList
 
   def notify
     subscribers.each do |subj|
+      p "d"
       names = self.get_names
       subj.set_table_data(self.get_data)
       subj.set_table_params(names, names.length)

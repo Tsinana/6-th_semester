@@ -32,10 +32,18 @@ class Students_view < FXMainWindow
       "Refresh",
       :opts => FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,
       :width => 160, :height => 40)
+    @b_refresh.connect(SEL_COMMAND) do |sender, sel, data|
+      self.controller.refresh_data
+    end
     @b_add = FXButton.new(header_frame,
       "Add",
       :opts => FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,
       :width => 160, :height => 40)
+
+    @b_add.connect(SEL_COMMAND) do |sender, sel, data|
+      self.controller.press_add_student(app)
+    end
+
     @b_edit = FXButton.new(header_frame,
       "Edit",
       :opts => FRAME_RAISED|FRAME_THICK|LAYOUT_CENTER_X|LAYOUT_CENTER_Y|LAYOUT_FIX_WIDTH|LAYOUT_FIX_HEIGHT,
@@ -51,7 +59,6 @@ class Students_view < FXMainWindow
     @b_edit.backColor = FXRGB(180, 200,230)
     @b_edit.enabled = false
     @b_delete.enabled = false
-    @b_add.enabled = false
 
     # footer
     footer = FXHorizontalFrame.new(tableframe, FRAME_THICK|LAYOUT_FILL_X|LAYOUT_BOTTOM)
@@ -179,11 +186,11 @@ class Students_view < FXMainWindow
       if selected_items.length == 4 && self.inOneRow(selected_items)
         @b_edit.enabled = true
         @b_delete.enabled = true
-        @b_add.enabled = true
+
       end
       if selected_items.length != 4 && selected_items.length % 4 == 0 && self.inRows(selected_items)
         @b_edit.enabled = false
-        @b_add.enabled = false
+
         @b_delete.enabled = true
       end
     end
@@ -198,7 +205,7 @@ class Students_view < FXMainWindow
       selected_items.delete([pos.row, pos.col])
       @b_edit.enabled = false
       @b_delete.enabled = false
-      @b_add.enabled = false
+
   end
 
   def set_controller(controller)
@@ -215,6 +222,7 @@ class Students_view < FXMainWindow
   end
 
   def set_table_data(data_table)
+    p data_table
     @table.setTableSize(data_table.num_rows, data_table.num_columns)
     data_table.num_columns.times do |i|
       data_table.num_rows.times do |j|

@@ -9,9 +9,7 @@ class StudentListFileAdapter < StudentList
 	end
 
 	def get_k_n_student_short_list(elements_per_page, page_number)
-		p students_list_file.get_student_count
 		self.students_list_file.read_from_file(path_to_data)
-		p students_list_file.get_student_count
 		self.students_list_file.get_k_n_student_short_list(elements_per_page, page_number)
 	end
 

@@ -4,20 +4,18 @@ require_relative './classes/data&lists/student_list/students_list_file_adapter'
 require_relative './classes/data&lists/student_list/students_list_file'
 require_relative  './classes/data&lists/student_list/students_list_json'
 require_relative  './classes/data&lists/student_list/students_list_db'
+require_relative "./classes/controller_add_student"
+require_relative "./classes/modal_win_add_student"
 
 
 begin
  
   if __FILE__ == $0
-    #file
-    # students_list_file = StudentListFile.new(StudentListJson.new())
-    # dataFile = StudentListFileAdapter.new(students_list_file,"C:\\Users\\Tsinana\\GitHub\\6-th_semester\\ruby_not_rwby\\lab2\\data\\data_file.json")
 
     FXApp.new do |app| 
       controller = StudentsListControler.new() 
       model = DataListStudentShort.new([])
-      view = Students_view.new(app)
-      controller.set_view view
+      view = Students_view.new(app) 
       controller.set_model model
       controller.get_model.subscribe(view)
       view.set_controller controller

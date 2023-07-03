@@ -11,12 +11,26 @@ class StudentsListControler
 	end
  
 	def refresh_data
-		self.model.set_data(self.students_list.get_k_n_student_short_list(1,3).get_list_objs)
+		self.model.set_data(self.students_list.get_k_n_student_short_list(10,1).get_list_objs)
 		rescue SQLite3::CantOpenException  => e
 			self.connect_to_json
-			self.model.set_data(self.students_list.get_k_n_student_short_list(1,3).get_list_objs)
+			self.model.set_data(self.students_list.get_k_n_student_short_list(10,1).get_list_objs)
 		ensure
 			get_model.notify
+	end
+
+	def press_add_student(app)
+    view = ModalWinAddStudent.new(app)
+    controller = ControllerAddStudent.new()
+    view.set_controller controller
+    controller.set_view view
+    controller.set_main_controller self
+    view.create 
+	end
+
+	def add_student(student_obj)
+		self.students_list.add_student(student_obj)
+		self.refresh_data
 	end
 
 	def set_view(view)

@@ -29,7 +29,6 @@ class DataListStudentShort < DataList
 
   def notify
     subscribers.each do |subj|
-      p "d"
       names = self.get_names
       subj.set_table_data(self.get_data)
       subj.set_table_params(names, names.length)

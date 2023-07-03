@@ -5,7 +5,7 @@ class DBWorking
 	include MySingleton
 
 	def initialize()
-		@db = SQLite3::Database.open 'C:\Users\sinana\GitHub\6-th_semester\ruby_not_rwby\lab2\data\students.db'
+		@db = SQLite3::Database.open 'C:\Users\Tsinana\GitHub\6-th_semester\ruby_not_rwby\lab2\data\students.db'
 		@db.results_as_hash = true
 	end
 

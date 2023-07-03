@@ -1,12 +1,12 @@
 require_relative './super_student'
 
 class Student < SuperStudent
-	attr_validated :id do |val| val.to_s =~ ID_REGEX || val.nil? end
-	attr_validated :surname, :name, :patronymic  do |val| val =~ FULL_NAME_REGEX || val.nil? end
-	attr_validated :telegram do |val| val =~ TELEGRAM_REGEX || val.nil? end
-	attr_validated :email do |val| val =~ EMAIL_REGEX || val.nil? end
-	attr_validated :git do |val| val =~ GIT_REGEX || val.nil? end
-	attr_validated :phone do |val| val =~ PHONE_REGEX || val.nil? end
+	attr_validated :id do |val| self.validate_id val end
+	attr_validated :surname, :name, :patronymic  do |val| self.validate_full_name val end
+	attr_validated :telegram do |val| self.validate_telegram val end
+	attr_validated :email do |val| self.validate_email val end
+	attr_validated :git do |val| self.validate_git val end
+	attr_validated :phone do |val| self.validate_phone val end
 
 
 	def initialize(id:, surname:, name:, patronymic:, phone: nil, telegram: nil, email: nil, git: nil)
@@ -50,35 +50,32 @@ class Student < SuperStudent
 		"https://github.com/#{self.git}"
 	end
 
-	# def self.read_from_txt(path,separator = ';')
-	# 	raise Errno::ENOENT,"Bad path #{path}" unless File.file?(path)
-	# 	File.open(path) do |file|
-	# 		keys = file.first.chop.split(separator)
-	# 		file.each do |line|
-	# 			params = {}
-	# 			values = line.split(separator)
-	# 			values[-1] = values[-1].chop
-	# 			(keys.length).times do |i|
-	# 				values[i] = nil if values[i].nil? or values[i].length == 0
-	# 				params[keys[i].to_sym] = values[i]
-	# 			end
-	# 			new(**params)
-	# 		end
-	# 	end
-	# end
+	def self.validate_id val
+		val.to_s =~ ID_REGEX || val.nil?
+	end
 
+	def self.validate_full_name val
+		val =~ FULL_NAME_REGEX || val.nil?
+	end
 
-	# def self.write_to_txt(path,separator = ';')
-	# 	File.open(path,'w') do |file|
-	# 		file.puts @@students[0].get_titles(separator)
-	# 		@@students.each do |student|
-	# 			file.puts student.get_data(separator)
-	# 		end
-	# 	end
-	# end
+	def self.validate_telegram val
+		val =~ TELEGRAM_REGEX || val.nil?
+	end
+
+	def self.validate_email val
+		val =~ EMAIL_REGEX || val.nil?
+	end
+
+	def self.validate_git val
+		val =~ GIT_REGEX || val.nil?
+	end
+
+	def self.validate_phone val
+		val =~ PHONE_REGEX || val.nil?
+	end
 
 	private
-	
+
 	# метод, который проводит две валидации: наличие гита и наличие любого контакта для связи
 	def validate
 		validate_git

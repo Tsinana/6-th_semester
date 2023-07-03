@@ -5,8 +5,8 @@ class SuperStudent
 
 	ID_REGEX = /^[0-9]+$/
 	PHONE_REGEX = /^[(\+7)8][0-9]+$/
-	FULL_NAME_REGEX = /^[\w]+$/
-	TELEGRAM_REGEX = /^@[\w0-9]+$/
+	FULL_NAME_REGEX = /^[a-zA-Z]+$/
+	TELEGRAM_REGEX = /^@[\w]+$/
 	GIT_REGEX = /^[\w0-9]+$/
 	EMAIL_REGEX = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
